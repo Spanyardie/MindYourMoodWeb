@@ -16,5 +16,6 @@ namespace MindYourMoodWeb.Entities
         public ICollection<ChuffChartItem> ChuffChartItems { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
         public ICollection<Attitude> Attitudes { get; set; }
+        public ICollection<Fantasy> Fantasies { get; set; }
     }
 }

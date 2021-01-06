@@ -180,6 +180,10 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<Fantasy>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<Fantasy>()
+                .HasOne(u => u.User)
+                .WithMany(f => f.Fantasies)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Feeling>()
                 .HasKey(k => new { k.Id });
