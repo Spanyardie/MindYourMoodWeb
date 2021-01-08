@@ -87,7 +87,9 @@ namespace MindYourMoodWeb.Data
                 .HasKey(key => new { key.Id });
 
             builder.Entity<ActivityTimes>()
-                .HasOne(a => a.Activity);
+                .HasOne(a => a.Activity)
+                .WithMany(at => at.ActivityTimes)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Affirmation>().HasKey(a => new { a.Id });
             builder.Entity<Affirmation>()
