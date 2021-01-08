@@ -26,6 +26,8 @@ namespace MindYourMoodWeb.Data
         public DbSet<ActivityTimes> ActivityTimes { get; set; }
         public DbSet<Affirmation> Affirmations { get; set; }
         public DbSet<AlternativeThought> AlternativeThoughts { get; set; }
+        public DbSet<EvidenceAgainstHotThought> EvidencesAgainstHotThought { get; set; }
+        public DbSet<EvidenceForHotThought> EvidencesForHotThought { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AppointmentQuestion> AppointmentQuestions { get; set; }
         public DbSet<Attitude> Attitudes { get; set; }
