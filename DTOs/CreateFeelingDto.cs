@@ -1,19 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MindYourMoodWeb.DTOs
+﻿namespace MindYourMoodWeb.DTOs
 {
-    public class FeelingDto
+    public class CreateFeelingDto
     {
-        public int Id { get; set; }
-        [Required]
-        [StringLength(100)]
         public string ToWhat { get; set; }
         public int Strength { get; set; } = 0;
-        [Required]
         public int Type { get; set; }
-        [Required]
+        public int Feeling { get; set; }
         public int DoAction { get; set; }
-        [StringLength(200)]
         public string ActionOf { get; set; } = "";
         public int UserId { get; set; }
     }

@@ -16,6 +16,7 @@ namespace MindYourMoodWeb.Entities
         public Medication Medication { get; set; }
         public int Dosage { get; set; }
         public FoodRelevance Relevance { get; set; }
-        public ICollection<MedicationTime> MedicationTimes { get; set; }
+        public MedicationTime MedicationTime { get; set; }
+        public MedicationReminder MedicationTakeReminder { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace MindYourMoodWeb.DTOs
         [Required]
         [StringLength(300)]
         public string TextValue { get; set; }
+        [Required]
+        public int UserId { get; set; }
     }
 }

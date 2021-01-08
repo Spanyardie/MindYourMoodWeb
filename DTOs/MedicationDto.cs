@@ -10,5 +10,7 @@ namespace MindYourMoodWeb.DTOs
         public string MedicationName { get; set; }
         [Required]
         public int TotalDailyDosage { get; set; } = 0;
+        [Required]
+        public int PrescriptionId { get; set; }
     }
 }

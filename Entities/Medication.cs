@@ -8,6 +8,6 @@ namespace MindYourMoodWeb.Entities
         public string MedicationName { get; set; }
         public int TotalDailyDosage { get; set; }
         public Prescription Prescription { get; set; }
-        public ICollection<MedicationTime> MedicationTimes { get; set; }
+        public ICollection<MedicationSpread> MedicationSpreads { get; set; }
     }
 }

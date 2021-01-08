@@ -8,5 +8,7 @@ namespace MindYourMoodWeb.DTOs
         public int Id { get; set; }
         [Required]
         public DateTime ActivityDate { get; set; }
+        [Required]
+        public int UserId { get; set; }
     }
 }
