@@ -37,6 +37,7 @@ namespace MindYourMoodWeb.Data
         public IActivitiesRepository ActivitiesRepository => new ActivitiesRepository(_context, _mapper);
         public IActivityTimesRepository ActivityTimesRepository => new ActivityTimeRepository(_context, _mapper);
         public IContactRepository ContactRepository => new ContactRepository(_context, _mapper);
+        public IEvidenceAgainstHotThoughtRepository EvidenceAgainstHotThoughtRepository => new EvidenceAgainstHotThoughtRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context);
 
