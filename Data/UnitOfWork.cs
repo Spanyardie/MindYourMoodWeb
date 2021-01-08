@@ -17,8 +17,8 @@ namespace MindYourMoodWeb.Data
 
         public IAffirmationRepository AffirmationRepository => new AffirmationRepository(_context, _mapper);
         public IChuffChartRepository ChuffChartRepository => new ChuffChartRepository(_context, _mapper);
-        public IAppointmentRepository AppointmentRepository => new AppointmentRepository(_context, _mapper);
-        public IAppointmentQuestionRepository AppointmentQuestionRepository => new AppointmentQuestionRepository(_context, _mapper);
+        public IAppointmentRepository AppointmentsRepository => new AppointmentRepository(_context, _mapper);
+        public IAppointmentQuestionRepository AppointmentQuestionsRepository => new AppointmentQuestionRepository(_context, _mapper);
         public IAttitudeRepository AttitudeRepository => new AttitudeRepository(_context, _mapper);
         public IFantasyRepository FantasyRepository => new FantasyRepository(_context, _mapper);
         public IFeelingRepository FeelingRepository => new FeelingRepository(_context, _mapper);
@@ -36,6 +36,7 @@ namespace MindYourMoodWeb.Data
         public IAutomaticThoughtRepository AutomaticThoughtRepository => new AutomaticThoughtRepository(_context, _mapper);
         public IActivitiesRepository ActivitiesRepository => new ActivitiesRepository(_context, _mapper);
         public IActivityTimesRepository ActivityTimesRepository => new ActivityTimeRepository(_context, _mapper);
+        public IContactRepository ContactRepository => new ContactRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context);
 

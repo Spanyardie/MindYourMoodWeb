@@ -172,6 +172,10 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<Contact>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<Contact>()
+                .HasOne(u => u.User)
+                .WithMany(c => c.Contacts)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Fantasy>()
                 .HasKey(k => new { k.Id });
