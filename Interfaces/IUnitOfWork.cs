@@ -27,6 +27,8 @@ namespace MindYourMoodWeb.Interfaces
         IActivityTimesRepository ActivityTimesRepository { get; }
         IContactRepository ContactRepository { get; }
         IEvidenceAgainstHotThoughtRepository EvidenceAgainstHotThoughtRepository { get; }
+        IEvidenceForHotThoughtRepository EvidenceForHotThoughtRepository { get; }
+        IReRateMoodRepository ReRateMoodRepository { get; }
         
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
