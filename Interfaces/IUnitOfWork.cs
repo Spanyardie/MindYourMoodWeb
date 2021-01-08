@@ -16,6 +16,11 @@ namespace MindYourMoodWeb.Interfaces
         IPrescriptionRepository PrescriptionRepository { get; }
         IMedicationRepository MedicationRepository { get; }
         IMedicationSpreadRepository MedicationSpreadRepository { get; }
+        IMedicationReminderRepository MedicationReminderRepository { get; }
+        IMedicationTimeRepository MedicationTimeRepository { get; }
+        IMoodRepository MoodRepository { get; }
+        IMoodListRepository MoodListRepository { get; }
+        IPlayListRepository PlayListRepository { get; }
         
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
