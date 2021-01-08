@@ -6,8 +6,8 @@ namespace MindYourMoodWeb.Interfaces
     {
         IAffirmationRepository AffirmationRepository { get; }
         IChuffChartRepository ChuffChartRepository { get; }
-        IAppointmentRepository AppointmentRepository { get; }
-        IAppointmentQuestionRepository AppointmentQuestionRepository { get; }
+        IAppointmentRepository AppointmentsRepository { get; }
+        IAppointmentQuestionRepository AppointmentQuestionsRepository { get; }
         IAttitudeRepository AttitudeRepository { get; }
         IFantasyRepository FantasyRepository { get; }
         IFeelingRepository FeelingRepository { get; }
@@ -25,6 +25,7 @@ namespace MindYourMoodWeb.Interfaces
         IAutomaticThoughtRepository AutomaticThoughtRepository { get; }
         IActivitiesRepository ActivitiesRepository { get; }
         IActivityTimesRepository ActivityTimesRepository { get; }
+        IContactRepository ContactRepository { get; }
         
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
