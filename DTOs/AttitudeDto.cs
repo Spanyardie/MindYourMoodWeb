@@ -16,6 +16,7 @@ namespace MindYourMoodWeb.DTOs
         [Required]
         public int DoAction { get; set; }
         public string ActionOf { get; set; } = "";
+        [Required]
         public int UserId { get; set; }
     }
 }

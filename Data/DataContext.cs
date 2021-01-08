@@ -187,33 +187,60 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<Feeling>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<Feeling>()
+                .HasOne(u => u.User)
+                .WithMany(f => f.Feelings)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<GenericText>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<GenericText>()
+                .HasOne(u => u.User)
+                .WithMany(gt => gt.GenericTexts)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Health>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<Health>()
+                .HasOne(u => u.User)
+                .WithMany(h => h.Healths)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Image>()
                 .HasKey(k => new { k.Id });
 
             builder.Entity<MedicationReminder>()
                 .HasKey(k => new { k.Id });
-            builder.Entity<MedicationSpread>()
+            builder.Entity<MedicationReminder>()
+                .HasOne(ms => ms.MedicationSpread)
+                .WithOne(mr => mr.MedicationTakeReminder)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<MedicationTime>()
                 .HasKey(k => new { k.Id });
             builder.Entity<MedicationTime>()
+                .HasOne(ms => ms.Spread)
+                .WithOne(mt => mt.MedicationTime)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<MedicationSpread>()
                 .HasKey(k => new { k.Id });
             builder.Entity<Medication>()
                 .HasKey(k => new { k.Id });
-            builder.Entity<MedicationTime>()
+            builder.Entity<MedicationSpread>()
                 .HasOne(m => m.Medication)
-                .WithMany(mt => mt.MedicationTimes)
-                .HasForeignKey(k => k.Id)
+                .WithMany(mt => mt.MedicationSpreads)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Medication>()
                 .HasOne(p => p.Prescription)
                 .WithMany(m => m.Medications)
-                .HasForeignKey(k => k.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Prescription>()
+                .HasKey(k => k.Id);
+            builder.Entity<Prescription>()
+                .HasOne(u => u.User)
+                .WithMany(p => p.Prescriptions)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<MoodList>()

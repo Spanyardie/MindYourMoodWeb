@@ -10,6 +10,13 @@ namespace MindYourMoodWeb.Interfaces
         IAppointmentQuestionRepository AppointmentQuestionRepository { get; }
         IAttitudeRepository AttitudeRepository { get; }
         IFantasyRepository FantasyRepository { get; }
+        IFeelingRepository FeelingRepository { get; }
+        IGenericTextRepository GenericTextRepository { get; }
+        IHealthRepository HealthRepository { get; }
+        IPrescriptionRepository PrescriptionRepository { get; }
+        IMedicationRepository MedicationRepository { get; }
+        IMedicationSpreadRepository MedicationSpreadRepository { get; }
+        
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
         bool HasChanges();

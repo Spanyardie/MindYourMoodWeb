@@ -17,5 +17,9 @@ namespace MindYourMoodWeb.Entities
         public ICollection<Appointment> Appointments { get; set; }
         public ICollection<Attitude> Attitudes { get; set; }
         public ICollection<Fantasy> Fantasies { get; set; }
+        public ICollection<Feeling> Feelings { get; set; }
+        public ICollection<GenericText> GenericTexts { get; set; }
+        public ICollection<Health> Healths { get; set; }
+        public ICollection<Prescription> Prescriptions { get; set; }
     }
 }

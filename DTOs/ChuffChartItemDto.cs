@@ -13,5 +13,7 @@ namespace MindYourMoodWeb.DTOs
         public int ChuffChartType { get; set; }
         [Required]
         public DateTime AchievementDate { get; set; }
+        [Required]
+        public int UserId { get; set; }
     }
 }

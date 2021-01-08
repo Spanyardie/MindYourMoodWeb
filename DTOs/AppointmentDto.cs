@@ -15,5 +15,7 @@ namespace MindYourMoodWeb.DTOs
         [Required]
         public DateTime AppointmentTime { get; set; }
         public string Notes { get; set; } = "";
+        [Required]
+        public int UserId { get; set; }
     }
 }
