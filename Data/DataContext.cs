@@ -304,7 +304,6 @@ namespace MindYourMoodWeb.Data
             builder.Entity<Track>()
                 .HasOne(pl => pl.PlayList)
                 .WithMany(tr => tr.Tracks)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

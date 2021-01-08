@@ -26,14 +26,14 @@ namespace MindYourMoodWeb.Controllers
         public async Task<ActionResult<PlayListDto>> RemovePlayList(int Id)
         {
             var playlist = await _unitOfWork.PlayListRepository.GetPlayListAsync(Id);
-            if (playlist == null) return NotFound("Could not find requested Mood");
+            if (playlist == null) return NotFound("Could not find requested Play List");
 
 
             _unitOfWork.PlayListRepository.RemovePlayList(playlist);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<PlayListDto>(playlist));
 
-            return BadRequest("Unable to remove Mood");
+            return BadRequest("Unable to remove Play List");
         }
 
         [Authorize(Roles = "Member")]
