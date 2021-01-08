@@ -27,6 +27,11 @@ namespace MindYourMoodWeb.Data
         public IPrescriptionRepository PrescriptionRepository => new PrescriptionRepository(_context, _mapper);
         public IMedicationRepository MedicationRepository => new MedicationRepository(_context, _mapper);
         public IMedicationSpreadRepository MedicationSpreadRepository => new MedicationSpreadRepository(_context, _mapper);
+        public IMedicationReminderRepository MedicationReminderRepository => new MedicationReminderRepository(_context, _mapper);
+        public IMedicationTimeRepository MedicationTimeRepository => new MedicationTimeRepository(_context, _mapper);
+        public IMoodRepository MoodRepository => new MoodRepository(_context, _mapper);
+        public IMoodListRepository MoodListRepository => new MoodListRepository(_context, _mapper);
+        public IPlayListRepository PlayListRepository => new PlayListRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context);
 

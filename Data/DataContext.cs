@@ -91,61 +91,51 @@ namespace MindYourMoodWeb.Data
                 .WithMany(af => af.Affirmations)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<AlternativeThought>().HasKey(k => new { k.Id });
-
-            builder.Entity<Situation>().HasKey(k => new { k.Id });
-
-            builder.Entity<Mood>().HasKey(k => new { k.Id });
-
-            builder.Entity<AutomaticThought>().HasKey(k => new { k.Id });
-
-            builder.Entity<EvidenceForHotThought>().HasKey(k => new { k.Id });
-
-            builder.Entity<EvidenceAgainstHotThought>().HasKey(k => new { k.Id });
-
-            builder.Entity<ReRateMood>().HasKey(k => new { k.Id});
-
             builder.Entity<ThoughtRecord>()
                 .HasKey(k => new { k.Id });
 
+            builder.Entity<Situation>().HasKey(k => new { k.Id });
             builder.Entity<Situation>()
                 .HasOne(tr => tr.ThoughtRecord);
 
+            builder.Entity<Mood>().HasKey(k => new { k.Id });
             builder.Entity<Mood>()
                 .HasOne(tr => tr.ThoughtRecord)
                 .WithMany(m => m.Moods)
                 .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<AutomaticThought>().HasKey(k => new { k.Id });
             builder.Entity<AutomaticThought>()
                 .HasOne(tr => tr.ThoughtRecord)
                 .WithMany(at => at.AutomaticThoughts)
                 .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<EvidenceForHotThought>().HasKey(k => new { k.Id });
             builder.Entity<EvidenceForHotThought>()
                 .HasOne(at => at.AutomaticThought)
                 .WithMany(ef => ef.EvidenceForHotThought)
                 .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<EvidenceAgainstHotThought>().HasKey(k => new { k.Id });
             builder.Entity<EvidenceAgainstHotThought>()
                 .HasOne(at => at.AutomaticThought)
                 .WithMany(ea => ea.EvidenceAgainstHotThought)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<AlternativeThought>().HasKey(k => new { k.Id });
             builder.Entity<AlternativeThought>()
                 .HasOne(tr => tr.ThoughtRecord)
                 .WithMany(at => at.AlternativeThoughts)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<ReRateMood>().HasKey(k => new { k.Id });
             builder.Entity<ReRateMood>()
                 .HasOne(tr => tr.ThoughtRecord)
                 .WithMany(rm => rm.ReRateMoods)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
-
             builder.Entity<ReRateMood>()
                 .HasOne(m => m.Mood);
 
@@ -231,6 +221,14 @@ namespace MindYourMoodWeb.Data
                 .HasOne(m => m.Medication)
                 .WithMany(mt => mt.MedicationSpreads)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<MedicationReminder>()
+                .HasOne(ms => ms.MedicationSpread)
+                .WithOne(mr => mr.MedicationTakeReminder)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<MedicationTime>()
+                .HasOne(ms => ms.Spread)
+                .WithOne(mt => mt.MedicationTime)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Medication>()
                 .HasOne(p => p.Prescription)
                 .WithMany(m => m.Medications)
@@ -248,6 +246,10 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<PlayList>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<PlayList>()
+                .HasOne(u => u.User)
+                .WithMany(pl => pl.PlayLists)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Problem>()
                 .HasKey(k => new { k.Id });

@@ -9,7 +9,7 @@ namespace MindYourMoodWeb.Interfaces
     {
         void Update(MedicationSpread medicationSpread);
         Task<IEnumerable<MedicationSpreadDto>> GetMedicationSpreadsAsync(int medicationId);
-        Task<MedicationSpread> GetMedicationSpreadAsync(int medicationId);
+        Task<MedicationSpread> GetMedicationSpreadAsync(int medicationSpreadId);
         void AddMedicationSpread(MedicationSpread medicationSpread);
         void RemoveMedicationSpread(MedicationSpread medicationSpread);
     }

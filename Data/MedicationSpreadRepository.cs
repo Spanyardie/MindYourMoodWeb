@@ -27,11 +27,11 @@ namespace MindYourMoodWeb.Data
             _context.MedicationsSpreads.Add(medicationSpread);
         }
 
-        public async Task<MedicationSpread> GetMedicationSpreadAsync(int medicationId)
+        public async Task<MedicationSpread> GetMedicationSpreadAsync(int medicationSpreadId)
         {
             return await _context.MedicationsSpreads
                 .Include(m => m.Medication)
-                .SingleOrDefaultAsync(m => m.Medication.Id == medicationId);
+                .SingleOrDefaultAsync(m => m.Id == medicationSpreadId);
         }
 
         public async Task<IEnumerable<MedicationSpreadDto>> GetMedicationSpreadsAsync(int medicationId)
