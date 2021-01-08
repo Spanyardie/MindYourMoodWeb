@@ -22,6 +22,8 @@ namespace MindYourMoodWeb.Interfaces
         IMoodListRepository MoodListRepository { get; }
         IPlayListRepository PlayListRepository { get; }
         ITrackRepository TrackRepository { get; }
+        IAutomaticThoughtRepository AutomaticThoughtRepository { get; }
+        IActivitiesRepository ActivitiesRepository { get; }
         
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
