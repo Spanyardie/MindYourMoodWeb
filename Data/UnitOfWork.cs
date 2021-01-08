@@ -33,6 +33,8 @@ namespace MindYourMoodWeb.Data
         public IMoodListRepository MoodListRepository => new MoodListRepository(_context, _mapper);
         public IPlayListRepository PlayListRepository => new PlayListRepository(_context, _mapper);
         public ITrackRepository TrackRepository => new TrackRepository(_context, _mapper);
+        public IAutomaticThoughtRepository AutomaticThoughtRepository => new AutomaticThoughtRepository(_context, _mapper);
+        public IActivitiesRepository ActivitiesRepository => new ActivitiesRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context);
 

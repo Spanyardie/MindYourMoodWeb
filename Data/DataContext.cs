@@ -78,6 +78,10 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<Activities>()
                 .HasKey(key => new { key.Id });
+            builder.Entity<Activities>()
+                .HasOne(u => u.User)
+                .WithMany(a => a.Activities)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ActivityTimes>()
                 .HasKey(key => new { key.Id });
@@ -109,7 +113,6 @@ namespace MindYourMoodWeb.Data
             builder.Entity<AutomaticThought>()
                 .HasOne(tr => tr.ThoughtRecord)
                 .WithMany(at => at.AutomaticThoughts)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<EvidenceForHotThought>().HasKey(k => new { k.Id });
