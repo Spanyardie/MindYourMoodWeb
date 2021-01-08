@@ -123,7 +123,6 @@ namespace MindYourMoodWeb.Data
             builder.Entity<EvidenceForHotThought>()
                 .HasOne(at => at.AutomaticThought)
                 .WithMany(ef => ef.EvidenceForHotThought)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<EvidenceAgainstHotThought>().HasKey(k => new { k.Id });
