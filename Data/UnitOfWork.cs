@@ -40,6 +40,8 @@ namespace MindYourMoodWeb.Data
         public IEvidenceAgainstHotThoughtRepository EvidenceAgainstHotThoughtRepository => new EvidenceAgainstHotThoughtRepository(_context, _mapper);
         public IEvidenceForHotThoughtRepository EvidenceForHotThoughtRepository => new EvidenceForHotThoughtRepository(_context, _mapper);
         public IReRateMoodRepository ReRateMoodRepository => new ReRateMoodRepository(_context, _mapper);
+        public ISituationRepository SituationRepository => new SituationRepository(_context, _mapper);
+        public IProblemRepository ProblemRepository => new ProblemRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context);
 

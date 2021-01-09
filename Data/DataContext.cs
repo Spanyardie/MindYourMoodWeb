@@ -266,14 +266,12 @@ namespace MindYourMoodWeb.Data
             builder.Entity<ProblemStep>()
                 .HasOne(p => p.Problem)
                 .WithMany(ps => ps.Steps)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ProblemIdea>()
                 .HasOne(p => p.Problem);
             builder.Entity<ProblemIdea>()
                 .HasOne(ps => ps.Step)
                 .WithMany(pi => pi.Ideas)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ProblemProCon>()
                 .HasOne(p => p.Problem);
@@ -282,7 +280,6 @@ namespace MindYourMoodWeb.Data
             builder.Entity<ProblemProCon>()
                 .HasOne(pi => pi.Idea)
                 .WithMany(pp => pp.ProsAndCons)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Reaction>()
