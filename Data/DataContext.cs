@@ -263,16 +263,19 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<Problem>()
                 .HasKey(k => new { k.Id });
+
             builder.Entity<ProblemStep>()
                 .HasOne(p => p.Problem)
                 .WithMany(ps => ps.Steps)
                 .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<ProblemIdea>()
                 .HasOne(p => p.Problem);
             builder.Entity<ProblemIdea>()
                 .HasOne(ps => ps.Step)
                 .WithMany(pi => pi.Ideas)
                 .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<ProblemProCon>()
                 .HasOne(p => p.Problem);
             builder.Entity<ProblemProCon>()
@@ -290,19 +293,26 @@ namespace MindYourMoodWeb.Data
 
             builder.Entity<SafetyPlanCard>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<SafetyPlanCard>()
+                .HasOne(u => u.User)
+                .WithMany(sc => sc.SafetyPlanCards)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<SolutionPlan>()
                 .HasKey(k => new { k.Id });
             builder.Entity<SolutionPlan>()
                 .HasOne(sr => sr.SolutionReview)
                 .WithMany(ss => ss.SolutionSteps)
-                .HasForeignKey(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<SolutionReview>()
                 .HasOne(pi => pi.Idea);
 
             builder.Entity<TellMyself>()
                 .HasKey(k => new { k.Id });
+            builder.Entity<TellMyself>()
+                .HasOne(u => u.User)
+                .WithMany(tm => tm.TellMyselfs)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<PlayList>()
                 .HasKey(k => new { k.Id });

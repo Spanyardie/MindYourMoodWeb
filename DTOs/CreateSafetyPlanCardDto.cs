@@ -1,11 +1,11 @@
-﻿namespace MindYourMoodWeb.Entities
+﻿namespace MindYourMoodWeb.DTOs
 {
-    public class SafetyPlanCard : Entity
+    public class CreateSafetyPlanCardDto
     {
         public string CalmMyself { get; set; }
         public string TellMyself { get; set; }
         public string WillCall { get; set; }
         public string WillGoTo { get; set; }
-        public AppUser User { get; set; }
+        public int UserId { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace MindYourMoodWeb.DTOs
         [Required]
         [StringLength(200)]
         public string TellTitle { get; set; }
+        public int UserId { get; set; }
     }
 }
