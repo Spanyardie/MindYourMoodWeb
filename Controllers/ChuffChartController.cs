@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removechuffchartitem/{id}")]
         public async Task<ActionResult> RemoveChuffChartItem(int Id)
         {
-            var chuffChartitem = await _unitOfWork.ChuffChartRepository.GetChuffChartItemAsync(Id);
+            var chuffChartitem = await _unitOfWork.ChuffChartRepository.GetItemAsync(Id);
             if (chuffChartitem == null) return NotFound("Could not find requested Chuff chart item");
 
 
-            _unitOfWork.ChuffChartRepository.RemoveChuffChartItem(_mapper.Map<ChuffChartItem>(chuffChartitem));
+            _unitOfWork.ChuffChartRepository.RemoveItem(_mapper.Map<ChuffChartItem>(chuffChartitem));
 
             if(await _unitOfWork.Complete()) return Ok(_mapper.Map<ChuffChartItemDto>(chuffChartitem));
 
@@ -48,7 +48,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.ChuffChartRepository.AddChuffChartItem(chuffChartItem);
+            _unitOfWork.ChuffChartRepository.AddItem(chuffChartItem);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ChuffChartItemDto>(chuffChartItem));
 
             return BadRequest("Unable to create Chuff chart item");
@@ -58,7 +58,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getchuffchartitems/{userId}")]
         public async Task<ActionResult<IEnumerable<ChuffChartItemDto>>> GetChuffChartItemsForUser(int userId)
         {
-            var chuffChartItems = await _unitOfWork.ChuffChartRepository.GetChuffChartItemsAsync(userId);
+            var chuffChartItems = await _unitOfWork.ChuffChartRepository.GetItemsAsync(u => u.User.Id == userId);
             if (chuffChartItems == null) return NotFound("There are no Chuff chart items stored");
 
             return Ok(chuffChartItems);
@@ -68,7 +68,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getchuffchartitem/{itemId}")]
         public async Task<ActionResult<ChuffChartItemDto>> GetChuffChartItemById(int itemId)
         {
-            var chuffChartitem = await _unitOfWork.ChuffChartRepository.GetChuffChartItemsAsync(itemId);
+            var chuffChartitem = await _unitOfWork.ChuffChartRepository.GetItemAsync(itemId);
             if (chuffChartitem == null) return BadRequest("Chuff chart item with specified Id does not exist");
 
             return Ok(_mapper.Map<ChuffChartItemDto>(chuffChartitem));

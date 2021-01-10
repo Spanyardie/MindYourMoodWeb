@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemedicationtime/{Id}")]
         public async Task<ActionResult<MedicationTimeDto>> RemoveMedicationTime(int Id)
         {
-            var medicationTime = await _unitOfWork.MedicationTimeRepository.GetMedicationTimeAsync(Id);
+            var medicationTime = await _unitOfWork.MedicationTimeRepository.GetItemAsync(Id);
             if (medicationTime == null) return NotFound("Could not find requested Medication Time");
 
 
-            _unitOfWork.MedicationTimeRepository.RemoveMedicationTime(medicationTime);
+            _unitOfWork.MedicationTimeRepository.RemoveItem(medicationTime);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationTimeDto>(medicationTime));
 
@@ -39,7 +39,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpPost("createmedicationtime/{medicationSpreadId}")]
         public async Task<ActionResult<MedicationTimeDto>> CreateMedicationTime(int medicationSpreadId, CreateMedicationTimeDto createMedicationTimeDto)
         {
-            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetMedicationSpreadAsync(medicationSpreadId);
+            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetItemAsync(medicationSpreadId);
             if (medicationSpread == null) return BadRequest("Could not identify the Spread to add Time to");
 
             var medicationTime = new MedicationTime
@@ -50,7 +50,7 @@ namespace MindYourMoodWeb.Controllers
                 Medication = medicationSpread.Medication
             };
 
-            _unitOfWork.MedicationTimeRepository.AddMedicationTime(medicationTime);
+            _unitOfWork.MedicationTimeRepository.AddItem(medicationTime);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationTimeDto>(medicationTime));
 
             return BadRequest("Unable to create Medication Time");
@@ -60,7 +60,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationtimes/{medicationSpreadId}")]
         public async Task<ActionResult<IEnumerable<MedicationTimeDto>>> GetMedicationTimesForMedication(int medicationSpreadId)
         {
-            var medicationTimes = await _unitOfWork.MedicationTimeRepository.GetMedicationTimesAsync(medicationSpreadId);
+            var medicationTimes = await _unitOfWork.MedicationTimeRepository.GetItemsAsync(ms => ms.Spread.Id == medicationSpreadId);
             if (medicationTimes == null) return NotFound("There are no Medication Times stored");
 
             return Ok(medicationTimes);
@@ -70,7 +70,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationtime/{medicationTimeId}")]
         public async Task<ActionResult<MedicationTimeDto>> GetMedicationTimeById(int medicationTimeId)
         {
-            var medicationTime = await _unitOfWork.MedicationTimeRepository.GetMedicationTimeAsync(medicationTimeId);
+            var medicationTime = await _unitOfWork.MedicationTimeRepository.GetItemAsync(medicationTimeId);
             if (medicationTime == null) return BadRequest("Medication Time with specified Id does not exist");
 
             return Ok(_mapper.Map<MedicationTimeDto>(medicationTime));

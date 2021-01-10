@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MindYourMoodWeb.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Entities
 {
-    public class Appointment
+    public class Appointment : Entity
     {
         public enum AppointmentType
         {
@@ -33,7 +34,6 @@ namespace MindYourMoodWeb.Entities
             JobInterview
         }
 
-        public int Id { get; set; }
         public DateTime Date { get; set; }
         public AppointmentType Type { get; set; }
         public string Location { get; set; }

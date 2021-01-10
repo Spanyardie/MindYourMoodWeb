@@ -24,10 +24,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removegenerictext/{Id}")]
         public async Task<ActionResult<GenericTextDto>> RemoveGenericText(int Id)
         {
-            var genericText = await _unitOfWork.GenericTextRepository.GetGenericTextAsync(Id);
+            var genericText = await _unitOfWork.GenericTextRepository.GetItemAsync(Id);
             if (genericText == null) return NotFound("Could not find requested Generic Text");
 
-            _unitOfWork.GenericTextRepository.RemoveGenericText(genericText);
+            _unitOfWork.GenericTextRepository.RemoveItem(genericText);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<GenericTextDto>(genericText));
 
@@ -45,7 +45,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.GenericTextRepository.AddGenericText(genericText);
+            _unitOfWork.GenericTextRepository.AddItem(genericText);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<GenericTextDto>(genericText));
 
             return BadRequest("Unable to create Generic Text");
@@ -55,7 +55,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getgenerictexts/{userId}")]
         public async Task<ActionResult<IEnumerable<GenericTextDto>>> GetGenericTextsForUser(int userId)
         {
-            var genericTexts = await _unitOfWork.GenericTextRepository.GetGenericTextsAsync(userId);
+            var genericTexts = await _unitOfWork.GenericTextRepository.GetItemsAsync(u => u.User.Id == userId);
             if (genericTexts == null) return NotFound("There are no Generic Text items stored");
 
             return Ok(genericTexts);
@@ -65,7 +65,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getgenerictext/{genericTextId}")]
         public async Task<ActionResult<GenericTextDto>> GetGenericTextById(int genericTextId)
         {
-            var genericText = await _unitOfWork.GenericTextRepository.GetGenericTextAsync(genericTextId);
+            var genericText = await _unitOfWork.GenericTextRepository.GetItemAsync(genericTextId);
             if (genericText == null) return BadRequest("Generic Text with specified Id does not exist");
 
             return Ok(_mapper.Map<GenericTextDto>(genericText));

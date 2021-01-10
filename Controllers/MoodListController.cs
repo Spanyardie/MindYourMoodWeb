@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemoodlist/{Id}")]
         public async Task<ActionResult<MoodListDto>> RemoveMoodList(int Id)
         {
-            var moodlist = await _unitOfWork.MoodListRepository.GetMoodListAsync(Id);
+            var moodlist = await _unitOfWork.MoodListRepository.GetItemAsync(Id);
             if (moodlist == null) return NotFound("Could not find requested MoodList");
 
 
-            _unitOfWork.MoodListRepository.RemoveMoodList(moodlist);
+            _unitOfWork.MoodListRepository.RemoveItem(moodlist);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MoodListDto>(moodlist));
 
@@ -46,7 +46,7 @@ namespace MindYourMoodWeb.Controllers
                 MoodName = createMoodListDto.MoodName
             };
 
-            _unitOfWork.MoodListRepository.AddMoodList(moodlist);
+            _unitOfWork.MoodListRepository.AddItem(moodlist);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MoodListDto>(moodlist));
 
             return BadRequest("Unable to create MoodList");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmoodlists")]
         public async Task<ActionResult<IEnumerable<MoodListDto>>> GetMoodLists()
         {
-            var moodlists = await _unitOfWork.MoodListRepository.GetMoodListsAsync();
+            var moodlists = await _unitOfWork.MoodListRepository.GetItemsAsync(null);
             if (moodlists == null) return NotFound("There are no MoodLists stored");
 
             return Ok(moodlists);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmoodlist/{moodlistId}")]
         public async Task<ActionResult<MoodListDto>> GetMoodListById(int moodlistId)
         {
-            var moodlist = await _unitOfWork.MoodListRepository.GetMoodListAsync(moodlistId);
+            var moodlist = await _unitOfWork.MoodListRepository.GetItemAsync(moodlistId);
             if (moodlist == null) return BadRequest("MoodList with specified Id does not exist");
 
             return Ok(_mapper.Map<MoodListDto>(moodlist));

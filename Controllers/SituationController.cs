@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removesituation/{Id}")]
         public async Task<ActionResult<SituationDto>> RemoveSituation(int Id)
         {
-            var situation = await _unitOfWork.SituationRepository.GetSituationAsync(Id);
+            var situation = await _unitOfWork.SituationRepository.GetItemAsync(Id);
             if (situation == null) return NotFound("Could not find requested Situation");
 
 
-            _unitOfWork.SituationRepository.RemoveSituation(situation);
+            _unitOfWork.SituationRepository.RemoveItem(situation);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<SituationDto>(situation));
 
@@ -41,24 +41,24 @@ namespace MindYourMoodWeb.Controllers
         {
             var situation = new Situation
             {
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetThoughtRecord(userId),
+                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(userId),
                 What = createSituationDto.What,
                 When = createSituationDto.When,
                 Where = createSituationDto.Where,
                 Who = createSituationDto.Who
             };
 
-            _unitOfWork.SituationRepository.AddSituation(situation);
+            _unitOfWork.SituationRepository.AddItem(situation);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<SituationDto>(situation));
 
             return BadRequest("Unable to create Situation");
         }
 
         [Authorize(Roles = "Member")]
-        [HttpGet("getsituations/{userId}")]
-        public async Task<ActionResult<IEnumerable<SituationDto>>> GetSituationsForUser(int userId)
+        [HttpGet("getsituations/{thoughtRecordId}")]
+        public async Task<ActionResult<IEnumerable<SituationDto>>> GetSituationsForThoughtRecord(int thoughtRecordId)
         {
-            var situations = await _unitOfWork.SituationRepository.GetSituationsAsync(userId);
+            var situations = await _unitOfWork.SituationRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == thoughtRecordId);
             if (situations == null) return NotFound("There are no Situations stored");
 
             return Ok(situations);
@@ -68,7 +68,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getsituation/{situationId}")]
         public async Task<ActionResult<SituationDto>> GetSituationById(int situationId)
         {
-            var situation = await _unitOfWork.SituationRepository.GetSituationAsync(situationId);
+            var situation = await _unitOfWork.SituationRepository.GetItemAsync(situationId);
             if (situation == null) return BadRequest("Situation with specified Id does not exist");
 
             return Ok(_mapper.Map<SituationDto>(situation));

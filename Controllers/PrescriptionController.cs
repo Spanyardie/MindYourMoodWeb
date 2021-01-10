@@ -25,10 +25,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeprescription/{Id}")]
         public async Task<ActionResult<PrescriptionDto>> RemovePrescription(int Id)
         {
-            var prescription = await _unitOfWork.PrescriptionRepository.GetPrescriptionAsync(Id);
+            var prescription = await _unitOfWork.PrescriptionRepository.GetItemAsync(Id);
             if (prescription == null) return NotFound("Could not find requested Prescription");
 
-            _unitOfWork.PrescriptionRepository.RemovePrescription(prescription);
+            _unitOfWork.PrescriptionRepository.RemoveItem(prescription);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<PrescriptionDto>(prescription));
 
@@ -48,7 +48,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.PrescriptionRepository.AddPrescription(prescription);
+            _unitOfWork.PrescriptionRepository.AddItem(prescription);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<PrescriptionDto>(prescription));
 
             return BadRequest("Unable to create Prescription");
@@ -58,7 +58,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getprescriptions/{userId}")]
         public async Task<ActionResult<IEnumerable<PrescriptionDto>>> GetPrescriptionsForUser(int userId)
         {
-            var prescriptions = await _unitOfWork.PrescriptionRepository.GetPrescriptionsAsync(userId);
+            var prescriptions = await _unitOfWork.PrescriptionRepository.GetItemsAsync(u => u.User.Id == userId);
             if (prescriptions == null) return NotFound("There are no Prescriptions stored");
 
             return Ok(prescriptions);
@@ -68,7 +68,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getprescription/{prescriptionId}")]
         public async Task<ActionResult<FantasyDto>> GetPrescriptionById(int prescriptionId)
         {
-            var prescription = await _unitOfWork.PrescriptionRepository.GetPrescriptionAsync(prescriptionId);
+            var prescription = await _unitOfWork.PrescriptionRepository.GetItemAsync(prescriptionId);
             if (prescription == null) return BadRequest("Prescription with specified Id does not exist");
 
             return Ok(_mapper.Map<PrescriptionDto>(prescription));

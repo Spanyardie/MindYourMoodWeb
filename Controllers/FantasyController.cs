@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removefantasy/{Id}")]
         public async Task<ActionResult<FantasyDto>> RemoveFantasy(int Id)
         {
-            var fantasy = await _unitOfWork.FantasyRepository.GetFantasyAsync(Id);
+            var fantasy = await _unitOfWork.FantasyRepository.GetItemAsync(Id);
             if (fantasy == null) return NotFound("Could not find requested Fantasy");
 
 
-            _unitOfWork.FantasyRepository.RemoveFantasy(fantasy);
+            _unitOfWork.FantasyRepository.RemoveItem(fantasy);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<FantasyDto>(fantasy));
 
@@ -49,7 +49,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.FantasyRepository.AddFantasy(fantasy);
+            _unitOfWork.FantasyRepository.AddItem(fantasy);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<FantasyDto>(fantasy));
 
             return BadRequest("Unable to create Fantasy");
@@ -59,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getfantasies/{userId}")]
         public async Task<ActionResult<IEnumerable<FantasyDto>>> GetFantasiesForUser(int userId)
         {
-            var fantasies = await _unitOfWork.FantasyRepository.GetFantasiesAsync(userId);
+            var fantasies = await _unitOfWork.FantasyRepository.GetItemsAsync(u => u.User.Id == userId);
             if (fantasies == null) return NotFound("There are no Fantasies stored");
 
             return Ok(fantasies);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getfantasy/{fantasyId}")]
         public async Task<ActionResult<FantasyDto>> GetFantasyById(int fantasyId)
         {
-            var fantasy = await _unitOfWork.FantasyRepository.GetFantasyAsync(fantasyId);
+            var fantasy = await _unitOfWork.FantasyRepository.GetItemAsync(fantasyId);
             if (fantasy == null) return BadRequest("Fantasy with specified Id does not exist");
 
             return Ok(_mapper.Map<FantasyDto>(fantasy));

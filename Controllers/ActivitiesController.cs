@@ -24,10 +24,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeactivity/{Id}")]
         public async Task<ActionResult<ActivityDto>> RemoveActivity(int Id)
         {
-            var activity = await _unitOfWork.ActivitiesRepository.GetActivityAsync(Id);
+            var activity = await _unitOfWork.ActivitiesRepository.GetItemAsync(Id);
             if (activity == null) return NotFound("Could not find requested Activity");
 
-            _unitOfWork.ActivitiesRepository.RemoveActivity(activity);
+            _unitOfWork.ActivitiesRepository.RemoveItem(activity);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ActivityDto>(activity));
 
@@ -44,7 +44,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.ActivitiesRepository.AddActivity(activity);
+            _unitOfWork.ActivitiesRepository.AddItem(activity);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ActivityDto>(activity));
 
             return BadRequest("Unable to create Activity");
@@ -54,7 +54,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getactivities/{userId}")]
         public async Task<ActionResult<IEnumerable<ActivityDto>>> GetActivitiesForUser(int userId)
         {
-            var activities = await _unitOfWork.ActivitiesRepository.GetActivitiesAsync(userId);
+            var activities = await _unitOfWork.ActivitiesRepository.GetItemsAsync(u => u.User.Id == userId);
             if (activities == null) return NotFound("There are no Activities stored");
 
             return Ok(activities);
@@ -64,7 +64,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getactivity/{activityId}")]
         public async Task<ActionResult<ActivityDto>> GetActivityById(int activityId)
         {
-            var activity = await _unitOfWork.ActivitiesRepository.GetActivityAsync(activityId);
+            var activity = await _unitOfWork.ActivitiesRepository.GetItemAsync(activityId);
             if (activity == null) return BadRequest("Activity with specified Id does not exist");
 
             return Ok(_mapper.Map<ActivityDto>(activity));

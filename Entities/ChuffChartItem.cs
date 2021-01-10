@@ -2,7 +2,7 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class ChuffChartItem
+    public class ChuffChartItem : Entity
     {
         public enum AchievementType
         {
@@ -17,7 +17,7 @@ namespace MindYourMoodWeb.Entities
             Goal
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Achievement { get; set; }
         public AchievementType ChuffChartType { get; set; }
         public DateTime AchievementDate { get; set; }

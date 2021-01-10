@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MindYourMoodWeb.Extensions;
+using MindYourMoodWeb.Interfaces;
+using MindYourMoodWeb.Data;
 
 namespace MindYourMoodWeb
 {

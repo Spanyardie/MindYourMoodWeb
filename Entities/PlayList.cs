@@ -2,9 +2,9 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class PlayList
+    public class PlayList : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Name { get; set; }
         public int TrackCount { get; set; }
         public ICollection<Track> Tracks { get; set; }

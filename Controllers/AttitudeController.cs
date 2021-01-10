@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeattitude/{Id}")]
         public async Task<ActionResult<AttitudeDto>> RemoveAttitude(int Id)
         {
-            var attitude = await _unitOfWork.AttitudeRepository.GetAttitudeAsync(Id);
+            var attitude = await _unitOfWork.AttitudeRepository.GetItemAsync(Id);
             if (attitude == null) return NotFound("Could not find requested Attitude");
 
 
-            _unitOfWork.AttitudeRepository.RemoveAttitude(attitude);
+            _unitOfWork.AttitudeRepository.RemoveItem(attitude);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AttitudeDto>(attitude));
 
@@ -50,7 +50,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.AttitudeRepository.AddAttitude(attitude);
+            _unitOfWork.AttitudeRepository.AddItem(attitude);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AttitudeDto>(attitude));
 
             return BadRequest("Unable to create Attitude");
@@ -60,7 +60,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getattitudes/{userId}")]
         public async Task<ActionResult<IEnumerable<AttitudeDto>>> GetAttitudesForUser(int userId)
         {
-            var attitudes = await _unitOfWork.AttitudeRepository.GetAttitudesAsync(userId);
+            var attitudes = await _unitOfWork.AttitudeRepository.GetItemsAsync(u => u.User.Id == userId);
             if (attitudes == null) return NotFound("There are no Attitudes stored");
 
             return Ok(attitudes);
@@ -70,7 +70,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getattitude/{attitudeId}")]
         public async Task<ActionResult<AttitudeDto>> GetAttitudeById(int attitudeId)
         {
-            var attitude = await _unitOfWork.AttitudeRepository.GetAttitudeAsync(attitudeId);
+            var attitude = await _unitOfWork.AttitudeRepository.GetItemAsync(attitudeId);
             if (attitude == null) return BadRequest("Attitude with specified Id does not exist");
 
             return Ok(_mapper.Map<AttitudeDto>(attitude));

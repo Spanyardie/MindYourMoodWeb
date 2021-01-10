@@ -24,10 +24,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removereratemood/{Id}")]
         public async Task<ActionResult<ReRateMoodDto>> RemoveReRateMood(int Id)
         {
-            var reratemood = await _unitOfWork.ReRateMoodRepository.GetReRateMoodAsync(Id);
+            var reratemood = await _unitOfWork.ReRateMoodRepository.GetItemAsync(Id);
             if (reratemood == null) return NotFound("Could not find requested ReRate Mood");
 
-            _unitOfWork.ReRateMoodRepository.RemoveReRateMood(reratemood);
+            _unitOfWork.ReRateMoodRepository.RemoveItem(reratemood);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ReRateMoodDto>(reratemood));
 
@@ -40,13 +40,13 @@ namespace MindYourMoodWeb.Controllers
         {
             var reratemood = new ReRateMood
             {
-                Mood = await _unitOfWork.MoodRepository.GetMoodAsync(createReRateMoodDto.MoodsId),
+                Mood = await _unitOfWork.MoodRepository.GetItemAsync(createReRateMoodDto.MoodsId),
                 MoodListId = createReRateMoodDto.MoodListId,
                 MoodRating = createReRateMoodDto.MoodRating,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetThoughtRecord(thoughtRecordId)
+                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId)
             };
 
-            _unitOfWork.ReRateMoodRepository.AddReRateMood(reratemood);
+            _unitOfWork.ReRateMoodRepository.AddItem(reratemood);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ReRateMoodDto>(reratemood));
 
             return BadRequest("Unable to create ReRate Mood");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getreratemoods/{thoughtRecordId}")]
         public async Task<ActionResult<IEnumerable<ReRateMoodDto>>> GetReRateMoodsForThoughtRecord(int thoughtRecordId)
         {
-            var reratemoods = await _unitOfWork.ReRateMoodRepository.GetReRateMoodsAsync(thoughtRecordId);
+            var reratemoods = await _unitOfWork.ReRateMoodRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == thoughtRecordId);
             if (reratemoods == null) return NotFound("There are no ReRate Moods stored");
 
             return Ok(reratemoods);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getreratemood/{reratemoodId}")]
         public async Task<ActionResult<ReRateMoodDto>> GetReRateMoodById(int reratemoodId)
         {
-            var reratemood = await _unitOfWork.ReRateMoodRepository.GetReRateMoodAsync(reratemoodId);
+            var reratemood = await _unitOfWork.ReRateMoodRepository.GetItemAsync(reratemoodId);
             if (reratemood == null) return BadRequest("ReRate Mood with specified Id does not exist");
 
             return Ok(_mapper.Map<ReRateMoodDto>(reratemood));

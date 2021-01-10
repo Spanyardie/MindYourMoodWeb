@@ -2,7 +2,7 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class MedicationSpread
+    public class MedicationSpread : Entity
     {
         public enum FoodRelevance
         {
@@ -12,7 +12,7 @@ namespace MindYourMoodWeb.Entities
             DoesntMatter
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public Medication Medication { get; set; }
         public int Dosage { get; set; }
         public FoodRelevance Relevance { get; set; }
