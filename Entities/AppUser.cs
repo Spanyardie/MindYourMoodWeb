@@ -24,5 +24,7 @@ namespace MindYourMoodWeb.Entities
         public ICollection<PlayList> PlayLists { get; set; }
         public ICollection<Activities> Activities { get; set; }
         public ICollection<Contact> Contacts { get; set; }
+        public ICollection<SafetyPlanCard> SafetyPlanCards { get; set; }
+        public ICollection<TellMyself> TellMyselfs { get; set; }
     }
 }

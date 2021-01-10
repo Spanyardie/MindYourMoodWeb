@@ -2,7 +2,6 @@
 {
     public class Track : Entity
     {
-        //public int Id { get; set; }
         public PlayList PlayList { get; set; }
         public string Name { get; set; }
         public string Artist { get; set; }

@@ -11,5 +11,6 @@ namespace MindYourMoodWeb.DTOs
         [StringLength(400)]
         public string SolutionStep { get; set; }
         public int PriorityOrder { get; set; } = 0;
+        public int SolutionReviewId { get; set; }
     }
 }

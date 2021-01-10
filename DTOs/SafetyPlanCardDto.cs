@@ -17,5 +17,6 @@ namespace MindYourMoodWeb.DTOs
         [Required]
         [StringLength(300)]
         public string WillGoTo { get; set; }
+        public int UserId { get; set; }
     }
 }

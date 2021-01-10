@@ -49,6 +49,7 @@ namespace MindYourMoodWeb.Data
             var query = AddIncludes();
             if (predicate != null)
                 query = query.Where(predicate);
+
             var items = await query.ProjectTo<TDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
