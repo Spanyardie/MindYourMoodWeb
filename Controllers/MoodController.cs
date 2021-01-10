@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemood/{Id}")]
         public async Task<ActionResult<MoodDto>> RemoveMood(int Id)
         {
-            var mood = await _unitOfWork.MoodRepository.GetMoodAsync(Id);
+            var mood = await _unitOfWork.MoodRepository.GetItemAsync(Id);
             if (mood == null) return NotFound("Could not find requested Mood");
 
 
-            _unitOfWork.MoodRepository.RemoveMood(mood);
+            _unitOfWork.MoodRepository.RemoveItem(mood);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MoodDto>(mood));
 
@@ -42,12 +42,12 @@ namespace MindYourMoodWeb.Controllers
         {
             var mood = new Mood
             {
-                MoodList = await _unitOfWork.MoodListRepository.GetMoodListAsync(createMoodDto.MoodListId),
-                ThoughtRecord = await _unitOfWork.ThoughtRecords.GetThoughtRecord(thoughtRecordId),
+                MoodList = await _unitOfWork.MoodListRepository.GetItemAsync(createMoodDto.MoodListId),
+                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId),
                 MoodRating = createMoodDto.MoodRating
             };
 
-            _unitOfWork.MoodRepository.AddMood(mood);
+            _unitOfWork.MoodRepository.AddItem(mood);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MoodDto>(mood));
 
             return BadRequest("Unable to create Mood");
@@ -57,7 +57,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmoods/{thoughtRecordId}")]
         public async Task<ActionResult<IEnumerable<MoodDto>>> GetMoodsForThoughtRecord(int thoughtRecordId)
         {
-            var moods = await _unitOfWork.MoodRepository.GetMoodsAsync(thoughtRecordId);
+            var moods = await _unitOfWork.MoodRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == thoughtRecordId);
             if (moods == null) return NotFound("There are no Moods stored");
 
             return Ok(moods);
@@ -67,7 +67,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmood/{moodId}")]
         public async Task<ActionResult<MoodDto>> GetMoodById(int moodId)
         {
-            var mood = await _unitOfWork.MoodRepository.GetMoodAsync(moodId);
+            var mood = await _unitOfWork.MoodRepository.GetItemAsync(moodId);
             if (mood == null) return BadRequest("Mood with specified Id does not exist");
 
             return Ok(_mapper.Map<MoodDto>(mood));

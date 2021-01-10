@@ -24,10 +24,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removecontact/{Id}")]
         public async Task<ActionResult<ContactDto>> RemoveContact(int Id)
         {
-            var contact = await _unitOfWork.ContactRepository.GetContactAsync(Id);
+            var contact = await _unitOfWork.ContactRepository.GetItemAsync(Id);
             if (contact == null) return NotFound("Could not find requested Contact");
 
-            _unitOfWork.ContactRepository.RemoveContact(contact);
+            _unitOfWork.ContactRepository.RemoveItem(contact);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ContactDto>(contact));
 
@@ -51,7 +51,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.ContactRepository.AddContact(contact);
+            _unitOfWork.ContactRepository.AddItem(contact);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ContactDto>(contact));
 
             return BadRequest("Unable to create Contact");
@@ -61,7 +61,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getcontacts/{userId}")]
         public async Task<ActionResult<IEnumerable<ContactDto>>> GetContactsForUser(int userId)
         {
-            var contacts = await _unitOfWork.ContactRepository.GetContactsAsync(userId);
+            var contacts = await _unitOfWork.ContactRepository.GetItemsAsync(u => u.User.Id == userId);
             if (contacts == null) return NotFound("There are no Contacts stored");
 
             return Ok(contacts);
@@ -71,7 +71,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getcontact/{contactId}")]
         public async Task<ActionResult<ContactDto>> GetContactById(int contactId)
         {
-            var contact = await _unitOfWork.ContactRepository.GetContactAsync(contactId);
+            var contact = await _unitOfWork.ContactRepository.GetItemAsync(contactId);
             if (contact == null) return BadRequest("Contact with specified Id does not exist");
 
             return Ok(_mapper.Map<ContactDto>(contact));

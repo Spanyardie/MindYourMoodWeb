@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removetrack/{Id}")]
         public async Task<ActionResult<TrackDto>> RemoveTrack(int Id)
         {
-            var track = await _unitOfWork.TrackRepository.GetTrackAsync(Id);
+            var track = await _unitOfWork.TrackRepository.GetItemAsync(Id);
             if (track == null) return NotFound("Could not find requested Track");
 
 
-            _unitOfWork.TrackRepository.RemoveTrack(track);
+            _unitOfWork.TrackRepository.RemoveItem(track);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<TrackDto>(track));
 
@@ -46,10 +46,10 @@ namespace MindYourMoodWeb.Controllers
                 Duration = createTrackDto.Duration,
                 OrderNumber = createTrackDto.OrderNumber,
                 Uri = createTrackDto.Uri,
-                PlayList = await _unitOfWork.PlayListRepository.GetPlayListAsync(playListId)
+                PlayList = await _unitOfWork.PlayListRepository.GetItemAsync(playListId)
             };
 
-            _unitOfWork.TrackRepository.AddTrack(track);
+            _unitOfWork.TrackRepository.AddItem(track);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<TrackDto>(track));
 
             return BadRequest("Unable to create Track");
@@ -59,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("gettracks/{playListId}")]
         public async Task<ActionResult<IEnumerable<TrackDto>>> GetMoodsForThoughtRecord(int playListId)
         {
-            var tracks = await _unitOfWork.TrackRepository.GetTracksAsync(playListId);
+            var tracks = await _unitOfWork.TrackRepository.GetItemsAsync(pl => pl.PlayList.Id == playListId);
             if (tracks == null) return NotFound("There are no Tracks stored");
 
             return Ok(tracks);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("gettrack/{trackId}")]
         public async Task<ActionResult<TrackDto>> GetTrackById(int trackId)
         {
-            var track = await _unitOfWork.TrackRepository.GetTrackAsync(trackId);
+            var track = await _unitOfWork.TrackRepository.GetItemAsync(trackId);
             if (track == null) return BadRequest("Track with specified Id does not exist");
 
             return Ok(_mapper.Map<TrackDto>(track));

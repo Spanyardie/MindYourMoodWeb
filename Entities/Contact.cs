@@ -1,8 +1,8 @@
 ﻿namespace MindYourMoodWeb.Entities
 {
-    public class Contact
+    public class Contact : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public int Uri { get; set; }
         public string Name { get; set; }
         public string TelephoneNumber { get; set; }

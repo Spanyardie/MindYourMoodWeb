@@ -26,11 +26,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemedication/{Id}")]
         public async Task<ActionResult<MedicationDto>> RemoveMedication(int Id)
         {
-            var medication = await _unitOfWork.MedicationRepository.GetMedicationAsync(Id);
+            var medication = await _unitOfWork.MedicationRepository.GetItemAsync(Id);
             if (medication == null) return NotFound("Could not find requested Medication");
 
 
-            _unitOfWork.MedicationRepository.RemoveMedication(medication);
+            _unitOfWork.MedicationRepository.RemoveItem(medication);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationDto>(medication));
 
@@ -46,10 +46,10 @@ namespace MindYourMoodWeb.Controllers
                 MedicationName = createMedicationDto.MedicationName,
                 TotalDailyDosage = createMedicationDto.TotalDailyDosage,
                 MedicationSpreads = new Collection<MedicationSpread>(),
-                Prescription = await _unitOfWork.PrescriptionRepository.GetPrescriptionAsync(prescriptionId)
+                Prescription = await _unitOfWork.PrescriptionRepository.GetItemAsync(prescriptionId)
             };
 
-            _unitOfWork.MedicationRepository.AddMedication(medication);
+            _unitOfWork.MedicationRepository.AddItem(medication);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationDto>(medication));
 
             return BadRequest("Unable to create Medication");
@@ -59,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedications/{prescriptionId}")]
         public async Task<ActionResult<IEnumerable<MedicationDto>>> GetMedicationsForPrescription(int prescriptionId)
         {
-            var medications = await _unitOfWork.MedicationRepository.GetMedicationsAsync(prescriptionId);
+            var medications = await _unitOfWork.MedicationRepository.GetItemsAsync(p => p.Prescription.Id == prescriptionId);
             if (medications == null) return NotFound("There are no Medications stored");
 
             return Ok(medications);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedication/{medicationId}")]
         public async Task<ActionResult<MedicationDto>> GetMedicationById(int medicationId)
         {
-            var medication = await _unitOfWork.MedicationRepository.GetMedicationAsync(medicationId);
+            var medication = await _unitOfWork.MedicationRepository.GetItemAsync(medicationId);
             if (medication == null) return BadRequest("Medication with specified Id does not exist");
 
             return Ok(_mapper.Map<MedicationDto>(medication));

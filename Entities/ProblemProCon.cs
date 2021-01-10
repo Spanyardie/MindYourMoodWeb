@@ -1,6 +1,6 @@
 ﻿namespace MindYourMoodWeb.Entities
 {
-    public class ProblemProCon
+    public class ProblemProCon : Entity
     {
         public enum ProblemType
         {
@@ -8,7 +8,7 @@
             Con
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public ProblemIdea Idea { get; set; }
         public ProblemStep Step { get; set; }
         public Problem Problem { get; set; }

@@ -2,9 +2,9 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class MedicationTime
+    public class MedicationTime : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public MedicationSpread Spread { get; set; }
         public Medication Medication { get; set; }
         public DateTime Time { get; set; }

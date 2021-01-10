@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeaffirmation/{Id}")]
         public async Task<ActionResult<AffirmationDto>> RemoveAffirmation(int Id)
         {
-            var affirmation = await _unitOfWork.AffirmationRepository.GetAffirmationAsync(Id);
+            var affirmation = await _unitOfWork.AffirmationRepository.GetItemAsync(Id);
             if (affirmation == null) return NotFound("Could not find requested Affirmation");
 
 
-            _unitOfWork.AffirmationRepository.RemoveAffirmation(affirmation);
+            _unitOfWork.AffirmationRepository.RemoveItem(affirmation);
 
             if(await _unitOfWork.Complete()) return Ok(_mapper.Map<AffirmationDto>(affirmation));
 
@@ -46,7 +46,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.AffirmationRepository.AddAffirmation(affirmation);
+            _unitOfWork.AffirmationRepository.AddItem(affirmation);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AffirmationDto>(affirmation));
 
             return BadRequest("Unable to create Affirmation");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getaffirmations/{userId}")]
         public async Task<ActionResult<IEnumerable<AffirmationDto>>> GetAffirmationsForUser(int userId)
         {
-            var affirmations = await _unitOfWork.AffirmationRepository.GetAffirmationsAsync(userId);
+            var affirmations = await _unitOfWork.AffirmationRepository.GetItemsAsync(u => u.User.Id == userId);
             if (affirmations == null) return NotFound("There are no Affirmations stored");
 
             return Ok(affirmations);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getaffirmation/{affirmationId}")]
         public async Task<ActionResult<AffirmationDto>> GetAffirmationById(int affirmationId)
         {
-            var affirmation = await _unitOfWork.AffirmationRepository.GetAffirmationAsync(affirmationId);
+            var affirmation = await _unitOfWork.AffirmationRepository.GetItemAsync(affirmationId);
             if (affirmation == null) return BadRequest("Affirmation with specified Id does not exist");
 
             return Ok(_mapper.Map<AffirmationDto>(affirmation));

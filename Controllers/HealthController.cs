@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using MindYourMoodWeb.DTOs;
 using MindYourMoodWeb.Entities;
 
-
 namespace MindYourMoodWeb.Controllers
 {
     public class HealthController : BaseApiController
@@ -25,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removehealth/{Id}")]
         public async Task<ActionResult<HealthDto>> RemoveHealth(int Id)
         {
-            var health = await _unitOfWork.HealthRepository.GetHealthAsync(Id);
+            var health = await _unitOfWork.HealthRepository.GetItemAsync(Id);
             if (health == null) return NotFound("Could not find requested Health");
 
 
-            _unitOfWork.HealthRepository.RemoveHealth(health);
+            _unitOfWork.HealthRepository.RemoveItem(health);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<HealthDto>(health));
 
@@ -50,7 +49,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.HealthRepository.AddHealth(health);
+            _unitOfWork.HealthRepository.AddItem(health);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<HealthDto>(health));
 
             return BadRequest("Unable to create Health");
@@ -60,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("gethealths/{userId}")]
         public async Task<ActionResult<IEnumerable<HealthDto>>> GetHealthsForUser(int userId)
         {
-            var healths = await _unitOfWork.HealthRepository.GetHealthsAsync(userId);
+            var healths = await _unitOfWork.HealthRepository.GetItemsAsync(u => u.User.Id == userId);
             if (healths == null) return NotFound("There are no Healths stored");
 
             return Ok(healths);
@@ -70,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("gethealth/{healthId}")]
         public async Task<ActionResult<HealthDto>> GetHealthById(int healthId)
         {
-            var health = await _unitOfWork.HealthRepository.GetHealthAsync(healthId);
+            var health = await _unitOfWork.HealthRepository.GetItemAsync(healthId);
             if (health == null) return BadRequest("Health with specified Id does not exist");
 
             return Ok(_mapper.Map<HealthDto>(health));

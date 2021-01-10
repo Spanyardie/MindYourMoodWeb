@@ -2,9 +2,9 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class ProblemIdea
+    public class ProblemIdea : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public ProblemStep Step { get; set; }
         public Problem Problem { get; set; }
         public string IdeaText { get; set; }

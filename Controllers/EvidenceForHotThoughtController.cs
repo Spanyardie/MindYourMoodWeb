@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeevidenceforhotthought/{id}")]
         public async Task<ActionResult> RemoveEvidenceForHotThought(int Id)
         {
-            var evidenceforhotthought = await _unitOfWork.EvidenceForHotThoughtRepository.GetEvidenceForHotThoughtAsync(Id);
+            var evidenceforhotthought = await _unitOfWork.EvidenceForHotThoughtRepository.GetItemAsync(Id);
             if (evidenceforhotthought == null) return NotFound("Could not find requested EvidenceForHotThought");
 
 
-            _unitOfWork.EvidenceForHotThoughtRepository.RemoveEvidenceForHotThought(_mapper.Map<EvidenceForHotThought>(evidenceforhotthought));
+            _unitOfWork.EvidenceForHotThoughtRepository.RemoveItem(_mapper.Map<EvidenceForHotThought>(evidenceforhotthought));
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<EvidenceForHotThoughtDto>(evidenceforhotthought));
 
@@ -41,12 +41,12 @@ namespace MindYourMoodWeb.Controllers
         {
             var evidenceforhotthought = new EvidenceForHotThought
             {
-                AutomaticThought = await _unitOfWork.AutomaticThoughtRepository.GetAutomaticThoughtAsync(automaticThoughtId),
+                AutomaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId),
                 Evidence = createEvidenceForHotThoughtDto.Evidence,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetThoughtRecord(createEvidenceForHotThoughtDto.ThoughtRecordId)
+                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(createEvidenceForHotThoughtDto.ThoughtRecordId)
             };
 
-            _unitOfWork.EvidenceForHotThoughtRepository.AddEvidenceForHotThought(evidenceforhotthought);
+            _unitOfWork.EvidenceForHotThoughtRepository.AddItem(evidenceforhotthought);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<EvidenceForHotThoughtDto>(evidenceforhotthought));
 
             return BadRequest("Unable to create Evidence For Hot Thought");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getevidenceforhotthoughts/{automaticThoughtId}")]
         public async Task<ActionResult<IEnumerable<EvidenceForHotThoughtDto>>> GetEvidencesForHotThought(int automaticThoughtId)
         {
-            var evidenceforhotthoughts = await _unitOfWork.EvidenceForHotThoughtRepository.GetEvidencesForHotThoughtAsync(automaticThoughtId);
+            var evidenceforhotthoughts = await _unitOfWork.EvidenceForHotThoughtRepository.GetItemsAsync(at => at.AutomaticThought.Id == automaticThoughtId);
             if (evidenceforhotthoughts == null) return NotFound("There are no Evidence For Hot Thoughts stored");
 
             return Ok(evidenceforhotthoughts);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getevidenceforhotthought/{evidenceForHotThoughtId}")]
         public async Task<ActionResult<EvidenceForHotThoughtDto>> GetEvidenceForHotThoughtById(int evidenceForHotThoughtId)
         {
-            var evidenceforhotthought = await _unitOfWork.EvidenceForHotThoughtRepository.GetEvidenceForHotThoughtAsync(evidenceForHotThoughtId);
+            var evidenceforhotthought = await _unitOfWork.EvidenceForHotThoughtRepository.GetItemAsync(evidenceForHotThoughtId);
             if (evidenceforhotthought == null) return BadRequest("Evidence For Hot Thought with specified Id does not exist");
 
             return Ok(_mapper.Map<EvidenceForHotThoughtDto>(evidenceforhotthought));

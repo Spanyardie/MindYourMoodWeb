@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Entities
 {
-    public class SolutionReview
+    public class SolutionReview : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public ProblemIdea Idea { get; set; }
         public ICollection<SolutionPlan> SolutionSteps { get; set; }
         public string ReviewText { get; set; }

@@ -1,58 +1,14 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using MindYourMoodWeb.DTOs;
 using MindYourMoodWeb.Entities;
-using MindYourMoodWeb.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Data
 {
-    public class MedicationSpreadRepository : IMedicationSpreadRepository
+    public class MedicationSpreadRepository : BaseRepository<MedicationSpread, MedicationSpreadDto>
     {
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
-
-        public MedicationSpreadRepository(DataContext context, IMapper mapper)
+        public MedicationSpreadRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {
-            _context = context;
-            _mapper = mapper;
-        }
-
-        public void AddMedicationSpread(MedicationSpread medicationSpread)
-        {
-            _context.MedicationsSpreads.Add(medicationSpread);
-        }
-
-        public async Task<MedicationSpread> GetMedicationSpreadAsync(int medicationSpreadId)
-        {
-            return await _context.MedicationsSpreads
-                .Include(m => m.Medication)
-                .SingleOrDefaultAsync(m => m.Id == medicationSpreadId);
-        }
-
-        public async Task<IEnumerable<MedicationSpreadDto>> GetMedicationSpreadsAsync(int medicationId)
-        {
-            var medicationSpreads = await _context.MedicationsSpreads
-                .Include(m => m.Medication)
-                .Where(m => m.Medication.Id == medicationId)
-                .ProjectTo<MedicationSpreadDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-
-            return medicationSpreads;
-        }
-
-        public void RemoveMedicationSpread(MedicationSpread medicationSpread)
-        {
-            _context.MedicationsSpreads.Remove(medicationSpread);
-        }
-
-        public void Update(MedicationSpread medicationSpread)
-        {
-            _context.Entry(medicationSpread).State = EntityState.Modified;
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class ActivityTimes
+    public class ActivityTimes : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public Activities Activity { get; set; }
         public string ActivityName { get; set; }
         public DateTime Time { get; set; }

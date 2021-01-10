@@ -1,8 +1,8 @@
 ﻿namespace MindYourMoodWeb.Entities
 {
-    public class ReRateMood
+    public class ReRateMood : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public int MoodListId { get; set; }
         public int MoodRating { get; set; }
         public Mood Mood { get; set; }

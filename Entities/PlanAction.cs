@@ -3,9 +3,9 @@ using static MindYourMoodWeb.Interfaces.IPlanAction;
 
 namespace MindYourMoodWeb.Entities
 {
-    public class PlanAction : IPlanAction
+    public class PlanAction : Entity, IPlanAction
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string ToWhat { get; set; }
         public int Strength { get; set; }
         public ReactionType Type { get; set; }

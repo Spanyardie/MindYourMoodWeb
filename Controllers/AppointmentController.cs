@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeappointment/{id}")]
         public async Task<ActionResult> RemoveAppointment(int Id)
         {
-            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentAsync(Id);
+            var appointment = await _unitOfWork.AppointmentsRepository.GetItemAsync(Id);
             if (appointment == null) return NotFound("Could not find requested Appointment");
 
 
-            _unitOfWork.AppointmentRepository.RemoveAppointment(_mapper.Map<Appointment>(appointment));
+            _unitOfWork.AppointmentsRepository.RemoveItem(_mapper.Map<Appointment>(appointment));
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AppointmentDto>(appointment));
 
@@ -50,7 +50,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.AppointmentRepository.AddAppointmentItem(appointment);
+            _unitOfWork.AppointmentsRepository.AddItem(appointment);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AppointmentDto>(appointment));
 
             return BadRequest("Unable to create Appointment");
@@ -60,7 +60,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getappointments/{userId}")]
         public async Task<ActionResult<IEnumerable<AppointmentDto>>> GetAppointmentsForUser(int userId)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentsAsync(userId);
+            var appointments = await _unitOfWork.AppointmentsRepository.GetItemsAsync(u => u.User.Id == userId);
             if (appointments == null) return NotFound("There are no Appointments stored");
 
             return Ok(appointments);
@@ -70,7 +70,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getappointment/{itemId}")]
         public async Task<ActionResult<AppointmentDto>> GetAppointmentById(int itemId)
         {
-            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentAsync(itemId);
+            var appointment = await _unitOfWork.AppointmentsRepository.GetItemAsync(itemId);
             if (appointment == null) return BadRequest("Appointment with specified Id does not exist");
 
             return Ok(_mapper.Map<AppointmentDto>(appointment));

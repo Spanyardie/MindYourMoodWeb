@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemedicationspread/{Id}")]
         public async Task<ActionResult<MedicationSpreadDto>> RemoveMedicationSpread(int Id)
         {
-            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetMedicationSpreadAsync(Id);
+            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetItemAsync(Id);
             if (medicationSpread == null) return NotFound("Could not find requested Medication Spread");
 
 
-            _unitOfWork.MedicationSpreadRepository.RemoveMedicationSpread(medicationSpread);
+            _unitOfWork.MedicationSpreadRepository.RemoveItem(medicationSpread);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationSpreadDto>(medicationSpread));
 
@@ -43,13 +43,13 @@ namespace MindYourMoodWeb.Controllers
             var medicationSpread = new MedicationSpread
             {
                 Dosage = createMedicationSpreadDto.Dosage,
-                Medication = await _unitOfWork.MedicationRepository.GetMedicationAsync(medicationId),
+                Medication = await _unitOfWork.MedicationRepository.GetItemAsync(medicationId),
                 MedicationTakeReminder = new MedicationReminder(),
                 MedicationTime = new MedicationTime(),
                 Relevance = (FoodRelevance)createMedicationSpreadDto.Relevance
             };
 
-            _unitOfWork.MedicationSpreadRepository.AddMedicationSpread(medicationSpread);
+            _unitOfWork.MedicationSpreadRepository.AddItem(medicationSpread);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationSpreadDto>(medicationSpread));
 
             return BadRequest("Unable to create Medication Spread");
@@ -59,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationspreads/{medicationId}")]
         public async Task<ActionResult<IEnumerable<MedicationSpreadDto>>> GetMedicationSpreadsForMedication(int medicationId)
         {
-            var medicationSpreads = await _unitOfWork.MedicationSpreadRepository.GetMedicationSpreadsAsync(medicationId);
+            var medicationSpreads = await _unitOfWork.MedicationSpreadRepository.GetItemsAsync(m => m.Medication.Id == medicationId);
             if (medicationSpreads == null) return NotFound("There are no Medication Spreads stored");
 
             return Ok(medicationSpreads);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationspread/{medicationId}")]
         public async Task<ActionResult<MedicationSpreadDto>> GetMedicationSpreadById(int medicationId)
         {
-            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetMedicationSpreadAsync(medicationId);
+            var medicationSpread = await _unitOfWork.MedicationSpreadRepository.GetItemAsync(medicationId);
             if (medicationSpread == null) return BadRequest("Medication Spread with specified Id does not exist");
 
             return Ok(_mapper.Map<MedicationSpreadDto>(medicationSpread));

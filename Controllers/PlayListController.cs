@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeplaylist/{Id}")]
         public async Task<ActionResult<PlayListDto>> RemovePlayList(int Id)
         {
-            var playlist = await _unitOfWork.PlayListRepository.GetPlayListAsync(Id);
+            var playlist = await _unitOfWork.PlayListRepository.GetItemAsync(Id);
             if (playlist == null) return NotFound("Could not find requested Play List");
 
 
-            _unitOfWork.PlayListRepository.RemovePlayList(playlist);
+            _unitOfWork.PlayListRepository.RemoveItem(playlist);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<PlayListDto>(playlist));
 
@@ -48,7 +48,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.PlayListRepository.AddPlayList(playlist);
+            _unitOfWork.PlayListRepository.AddItem(playlist);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<PlayListDto>(playlist));
 
             return BadRequest("Unable to create Play List");
@@ -58,7 +58,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getplaylists/{userId}")]
         public async Task<ActionResult<IEnumerable<PlayListDto>>> GetMoodsForThoughtRecord(int userId)
         {
-            var playlists = await _unitOfWork.PlayListRepository.GetPlayListsAsync(userId);
+            var playlists = await _unitOfWork.PlayListRepository.GetItemsAsync(u => u.User.Id == userId);
             if (playlists == null) return NotFound("There are no Play Lists stored");
 
             return Ok(playlists);
@@ -68,7 +68,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getplaylist/{playlistId}")]
         public async Task<ActionResult<PlayListDto>> GetPlayListById(int playlistId)
         {
-            var playlist = await _unitOfWork.PlayListRepository.GetPlayListAsync(playlistId);
+            var playlist = await _unitOfWork.PlayListRepository.GetItemAsync(playlistId);
             if (playlist == null) return BadRequest("Play List with specified Id does not exist");
 
             return Ok(_mapper.Map<PlayListDto>(playlist));

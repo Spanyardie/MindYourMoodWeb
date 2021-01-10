@@ -26,11 +26,12 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeappointmentquestion/{id}")]
         public async Task<ActionResult> RemoveAppointmentQuestion(int Id)
         {
-            var appointmentQuestion = await _unitOfWork.AppointmentQuestionRepository.GetAppointmentQuestionAsync(Id);
+            var appointmentQuestion = await _unitOfWork.AppointmentQuestionsRepository.GetItemAsync(Id);
             if (appointmentQuestion == null) return NotFound("Could not find requested Appointment question");
 
 
-            _unitOfWork.AppointmentQuestionRepository.RemoveAppointmentQuestion(_mapper.Map<AppointmentQuestion>(appointmentQuestion));
+            _unitOfWork.AppointmentQuestionsRepository.RemoveItem
+                (_mapper.Map<AppointmentQuestion>(appointmentQuestion));
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AppointmentQuestionDto>(appointmentQuestion));
 
@@ -45,10 +46,10 @@ namespace MindYourMoodWeb.Controllers
             {
                 Question = createAppointmentQuestionDto.Question,
                 Answer = createAppointmentQuestionDto.Answer,
-                Appointment = await _unitOfWork.AppointmentRepository.GetAppointmentAsync(createAppointmentQuestionDto.AppointmentId)
+                Appointment = await _unitOfWork.AppointmentsRepository.GetItemAsync(createAppointmentQuestionDto.AppointmentId)
             };
 
-            _unitOfWork.AppointmentQuestionRepository.AddApppointmentQuestion(appointmentQuestion);
+            _unitOfWork.AppointmentQuestionsRepository.AddItem(appointmentQuestion);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AppointmentQuestionDto>(appointmentQuestion));
 
             return BadRequest("Unable to create Appointment question");
@@ -58,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getappointmentquestions/{appointmentId}")]
         public async Task<ActionResult<IEnumerable<AppointmentQuestionDto>>> GetAppointmentQuestionsForAppointment(int appointmentId)
         {
-            var appointmentQuestions = await _unitOfWork.AppointmentQuestionRepository.GetAppointmentQuestionsAsync(appointmentId);
+            var appointmentQuestions = await _unitOfWork.AppointmentQuestionsRepository.GetItemsAsync(a => a.Id == appointmentId);
             if (appointmentQuestions == null) return NotFound("There are no Appointment Questions stored");
 
             return Ok(appointmentQuestions);
@@ -68,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getappointmentquestion/{itemId}")]
         public async Task<ActionResult<AppointmentQuestionDto>> GetAppointmentQuestionById(int itemId)
         {
-            var appointmentQuestion = await _unitOfWork.AppointmentQuestionRepository.GetAppointmentQuestionAsync(itemId);
+            var appointmentQuestion = await _unitOfWork.AppointmentQuestionsRepository.GetItemAsync(itemId);
             if (appointmentQuestion == null) return BadRequest("Appointment Question with specified Id does not exist");
 
             return Ok(_mapper.Map<AppointmentQuestionDto>(appointmentQuestion));

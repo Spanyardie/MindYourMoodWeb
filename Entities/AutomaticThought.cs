@@ -2,9 +2,9 @@
 
 namespace MindYourMoodWeb.Entities
 {
-    public class AutomaticThought
+    public class AutomaticThought : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public bool HotThought { get; set; }
         public string Thought { get; set; }
         public ThoughtRecord ThoughtRecord { get; set; }

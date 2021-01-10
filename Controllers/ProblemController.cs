@@ -25,10 +25,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeproblem/{Id}")]
         public async Task<ActionResult<ProblemDto>> RemoveProblem(int Id)
         {
-            var problem = await _unitOfWork.ProblemRepository.GetProblemAsync(Id);
+            var problem = await _unitOfWork.ProblemRepository.GetItemAsync(Id);
             if (problem == null) return NotFound("Could not find requested Problem");
 
-            _unitOfWork.ProblemRepository.RemoveProblem(problem);
+            _unitOfWork.ProblemRepository.RemoveItem(problem);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ProblemDto>(problem));
 
@@ -46,7 +46,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.ProblemRepository.AddProblem(problem);
+            _unitOfWork.ProblemRepository.AddItem(problem);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ProblemDto>(problem));
 
             return BadRequest("Unable to create Problem");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getproblems/{userId}")]
         public async Task<ActionResult<IEnumerable<ProblemDto>>> GetProblemsForUser(int userId)
         {
-            var problems = await _unitOfWork.ProblemRepository.GetProblemsAsync(userId);
+            var problems = await _unitOfWork.ProblemRepository.GetItemsAsync(u => u.User.Id == userId);
             if (problems == null) return NotFound("There are no Problems stored");
 
             return Ok(problems);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getproblem/{problemId}")]
         public async Task<ActionResult<ProblemDto>> GetProblemById(int problemId)
         {
-            var problem = await _unitOfWork.ProblemRepository.GetProblemAsync(problemId);
+            var problem = await _unitOfWork.ProblemRepository.GetItemAsync(problemId);
             if (problem == null) return BadRequest("Problem with specified Id does not exist");
 
             return Ok(_mapper.Map<ProblemDto>(problem));

@@ -25,11 +25,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeautomaticthought/{Id}")]
         public async Task<ActionResult<AutomaticThoughtDto>> RemoveAutomaticThought(int Id)
         {
-            var automaticThought = await _unitOfWork.AutomaticThoughtRepository.GetAutomaticThoughtAsync(Id);
+            var automaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(Id);
             if (automaticThought == null) return NotFound("Could not find requested Automatic Thought");
 
 
-            _unitOfWork.AutomaticThoughtRepository.RemoveAutomaticThought(automaticThought);
+            _unitOfWork.AutomaticThoughtRepository.RemoveItem(automaticThought);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AutomaticThoughtDto>(automaticThought));
 
@@ -42,14 +42,14 @@ namespace MindYourMoodWeb.Controllers
         {
             var automaticThought = new AutomaticThought
             {
-                EvidenceAgainstHotThought = await _unitOfWork.EvidenceAgainstHotThoughtRepository.GetEvidencesAgainstHotThought(createAutomaticThoughtDto.ThoughtRecordid),
-                EvidenceForHotThought = await _unitOfWork.EvidencesForHotThought(createAutomaticThoughtDto.ThoughtRecordid),
+                EvidenceAgainstHotThought = (IEnumerable<EvidenceAgainstHotThought>)await _unitOfWork.EvidenceAgainstHotThoughtRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id ==createAutomaticThoughtDto.ThoughtRecordid),
+                EvidenceForHotThought = (IEnumerable<EvidenceForHotThought>)await _unitOfWork.EvidenceForHotThoughtRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == createAutomaticThoughtDto.ThoughtRecordid),
                 HotThought = createAutomaticThoughtDto.HotThought,
                 Thought = createAutomaticThoughtDto.Thought,
-                ThoughtRecord = _unitOfWork.ThoughtRecordRepository.GetThoughtRecord(thoughtRecordId)
+                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId)
             };
 
-            _unitOfWork.AutomaticThoughtRepository.AddAutomaticThought(automaticThought);
+            _unitOfWork.AutomaticThoughtRepository.AddItem(automaticThought);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AutomaticThoughtDto>(automaticThought));
 
             return BadRequest("Unable to create Automatic Thought");
@@ -57,9 +57,9 @@ namespace MindYourMoodWeb.Controllers
 
         [Authorize(Roles = "Member")]
         [HttpGet("getautomaticthoughts/{thoughtRecordId}")]
-        public async Task<ActionResult<IEnumerable<AutomaticThoughtDto>>> GetMoodsForThoughtRecord(int thoughtRecordId)
+        public async Task<ActionResult<IEnumerable<AutomaticThoughtDto>>> GetAutomaticThoughtsForThoughtRecord(int thoughtRecordId)
         {
-            var automaticThoughts = await _unitOfWork.AutomaticThoughtRepository.GetAutomaticThoughtsAsync(thoughtRecordId);
+            var automaticThoughts = await _unitOfWork.AutomaticThoughtRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == thoughtRecordId);
             if (automaticThoughts == null) return NotFound("There are no Automatic Thoughts stored");
 
             return Ok(automaticThoughts);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getautomaticthought/{automaticThoughtId}")]
         public async Task<ActionResult<AutomaticThoughtDto>> GetAutomaticThoughtById(int automaticThoughtId)
         {
-            var automaticThought = await _unitOfWork.AutomaticThoughtRepository.GetAutomaticThoughtAsync(automaticThoughtId);
+            var automaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId);
             if (automaticThought == null) return BadRequest("Automatic Thought with specified Id does not exist");
 
             return Ok(_mapper.Map<AutomaticThoughtDto>(automaticThought));

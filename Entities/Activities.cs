@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Entities
 {
-    public class Activities
+    public class Activities : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public DateTime ActivityDate { get; set; }
         public IEnumerable<ActivityTimes> ActivityTimes { get; set; }
         public AppUser User { get; set; }

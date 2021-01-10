@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removefeeling/{Id}")]
         public async Task<ActionResult<FeelingDto>> RemoveFeeling(int Id)
         {
-            var feeling = await _unitOfWork.FeelingRepository.GetFeelingAsync(Id);
+            var feeling = await _unitOfWork.FeelingRepository.GetItemAsync(Id);
             if (feeling == null) return NotFound("Could not find requested Feeling");
 
 
-            _unitOfWork.FeelingRepository.RemoveFeeling(feeling);
+            _unitOfWork.FeelingRepository.RemoveItem(feeling);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<FeelingDto>(feeling));
 
@@ -49,7 +49,7 @@ namespace MindYourMoodWeb.Controllers
                 User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
             };
 
-            _unitOfWork.FeelingRepository.AddFeeling(feeling);
+            _unitOfWork.FeelingRepository.AddItem(feeling);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<FeelingDto>(feeling));
 
             return BadRequest("Unable to create Feeling");
@@ -59,7 +59,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getfeelings/{userId}")]
         public async Task<ActionResult<IEnumerable<FeelingDto>>> GetFeelingsForUser(int userId)
         {
-            var feelings = await _unitOfWork.FeelingRepository.GetFeelingsAsync(userId);
+            var feelings = await _unitOfWork.FeelingRepository.GetItemsAsync(u => u.User.Id == userId);
             if (feelings == null) return NotFound("There are no Feelings stored");
 
             return Ok(feelings);
@@ -69,7 +69,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getfeeling/{feelingId}")]
         public async Task<ActionResult<FeelingDto>> GetFeelingById(int feelingId)
         {
-            var feeling = await _unitOfWork.FeelingRepository.GetFeelingAsync(feelingId);
+            var feeling = await _unitOfWork.FeelingRepository.GetItemAsync(feelingId);
             if (feeling == null) return BadRequest("Feeling with specified Id does not exist");
 
             return Ok(_mapper.Map<FeelingDto>(feeling));

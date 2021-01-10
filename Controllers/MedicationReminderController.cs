@@ -24,11 +24,11 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removemedicationreminder/{Id}")]
         public async Task<ActionResult<MedicationReminderDto>> RemoveMedicationReminder(int Id)
         {
-            var medicationReminder = await _unitOfWork.MedicationReminderRepository.GetMedicationReminderAsync(Id);
+            var medicationReminder = await _unitOfWork.MedicationReminderRepository.GetItemAsync(Id);
             if (medicationReminder == null) return NotFound("Could not find requested Medication Reminder");
 
 
-            _unitOfWork.MedicationReminderRepository.RemoveMedicationReminder(medicationReminder);
+            _unitOfWork.MedicationReminderRepository.RemoveItem(medicationReminder);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationReminderDto>(medicationReminder));
 
@@ -43,10 +43,10 @@ namespace MindYourMoodWeb.Controllers
             {
                 MedicationDay = createMedicationReminderDto.MedicationDay,
                 MedicationTime = createMedicationReminderDto.MedicationTime,
-                MedicationSpread = await _unitOfWork.MedicationSpreadRepository.GetMedicationSpreadAsync(medicationSpreadId)
+                MedicationSpread = await _unitOfWork.MedicationSpreadRepository.GetItemAsync(medicationSpreadId)
             };
 
-            _unitOfWork.MedicationReminderRepository.AddMedicationReminder(medicationReminder);
+            _unitOfWork.MedicationReminderRepository.AddItem(medicationReminder);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MedicationReminderDto>(medicationReminder));
 
             return BadRequest("Unable to create Medication Reminder");
@@ -56,7 +56,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationreminders/{medicationSpreadId}")]
         public async Task<ActionResult<IEnumerable<MedicationReminderDto>>> GetMedicationRemindersForMedication(int medicationSpreadId)
         {
-            var medicationReminders = await _unitOfWork.MedicationReminderRepository.GetMedicationRemindersAsync(medicationSpreadId);
+            var medicationReminders = await _unitOfWork.MedicationReminderRepository.GetItemsAsync(ms => ms.MedicationSpread.Id == medicationSpreadId);
             if (medicationReminders == null) return NotFound("There are no Medication Reminders stored");
 
             return Ok(medicationReminders);
@@ -66,7 +66,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getmedicationreminder/{medicationReminderId}")]
         public async Task<ActionResult<MedicationReminderDto>> GetMedicationReminderById(int medicationReminderId)
         {
-            var medicationReminder = await _unitOfWork.MedicationReminderRepository.GetMedicationReminderAsync(medicationReminderId);
+            var medicationReminder = await _unitOfWork.MedicationReminderRepository.GetItemAsync(medicationReminderId);
             if (medicationReminder == null) return BadRequest("Medication Reminder with specified Id does not exist");
 
             return Ok(_mapper.Map<MedicationReminderDto>(medicationReminder));

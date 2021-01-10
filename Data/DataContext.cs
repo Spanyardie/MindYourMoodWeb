@@ -209,40 +209,40 @@ namespace MindYourMoodWeb.Data
             builder.Entity<Image>()
                 .HasKey(k => new { k.Id });
 
-            builder.Entity<MedicationReminder>()
-                .HasKey(k => new { k.Id });
-            builder.Entity<MedicationReminder>()
-                .HasOne(ms => ms.MedicationSpread)
-                .WithOne(mr => mr.MedicationTakeReminder)
+            builder.Entity<Medication>()
+                .HasOne(p => p.Prescription)
+                .WithMany(m => m.Medications)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<MedicationTime>()
+            builder.Entity<MedicationReminder>()
                 .HasKey(k => new { k.Id });
-            builder.Entity<MedicationTime>()
-                .HasOne(ms => ms.Spread)
-                .WithOne(mt => mt.MedicationTime)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<MedicationReminder>()
+                .HasOne(ms => ms.MedicationSpread);
 
             builder.Entity<MedicationSpread>()
-                .HasKey(k => new { k.Id });
-            builder.Entity<Medication>()
                 .HasKey(k => new { k.Id });
             builder.Entity<MedicationSpread>()
                 .HasOne(m => m.Medication)
                 .WithMany(mt => mt.MedicationSpreads)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<MedicationReminder>()
-                .HasOne(ms => ms.MedicationSpread)
-                .WithOne(mr => mr.MedicationTakeReminder)
-                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<MedicationSpread>()
+                .HasOne(mr => mr.MedicationTakeReminder)
+                .WithOne(ms => ms.MedicationSpread)
+                .HasForeignKey<MedicationReminder>(mr => mr.Id);
+
+            builder.Entity<MedicationSpread>()
+                .HasOne(mt => mt.MedicationTime)
+                .WithOne(ms => ms.Spread)
+                .HasForeignKey<MedicationTime>(mt => mt.Id);
+
+            builder.Entity<MedicationTime>()
+                .HasKey(k => new { k.Id });
             builder.Entity<MedicationTime>()
                 .HasOne(ms => ms.Spread)
                 .WithOne(mt => mt.MedicationTime)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Medication>()
-                .HasOne(p => p.Prescription)
-                .WithMany(m => m.Medications)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<MedicationTime>(mt => mt.Id);
+
 
             builder.Entity<Prescription>()
                 .HasKey(k => k.Id);

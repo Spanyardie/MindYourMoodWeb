@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Entities
 {
-    public class ThoughtRecord
+    public class ThoughtRecord : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public DateTime RecordDate { get; set; }
         public AppUser User { get; set; }
         public ICollection<Situation> Situation { get; set; }

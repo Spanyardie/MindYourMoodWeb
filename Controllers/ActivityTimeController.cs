@@ -24,10 +24,10 @@ namespace MindYourMoodWeb.Controllers
         [HttpDelete("removeactivitytime/{Id}")]
         public async Task<ActionResult<ActivityTimeDto>> RemoveActivityTime(int Id)
         {
-            var activitytime = await _unitOfWork.ActivityTimesRepository.GetActivityTimeAsync(Id);
+            var activitytime = await _unitOfWork.ActivityTimesRepository.GetItemAsync(Id);
             if (activitytime == null) return NotFound("Could not find requested Activity time");
 
-            _unitOfWork.ActivityTimesRepository.RemoveActivityTime(activitytime);
+            _unitOfWork.ActivityTimesRepository.RemoveItem(activitytime);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ActivityTimeDto>(activitytime));
 
@@ -41,14 +41,14 @@ namespace MindYourMoodWeb.Controllers
             var activitytime = new ActivityTimes
             {
                 Achievement = createActivityTimeDto.Achievement,
-                Activity = await _unitOfWork.ActivitiesRepository.GetActivityAsync(activityId),
+                Activity = await _unitOfWork.ActivitiesRepository.GetItemAsync(activityId),
                 ActivityName = createActivityTimeDto.ActivityName,
                 Intimacy = createActivityTimeDto.Intimacy,
                 Pleasure = createActivityTimeDto.Pleasure,
                 Time = createActivityTimeDto.Time
             };
 
-            _unitOfWork.ActivityTimesRepository.AddActivityTime(activitytime);
+            _unitOfWork.ActivityTimesRepository.AddItem(activitytime);
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ActivityTimeDto>(activitytime));
 
             return BadRequest("Unable to create Activity time");
@@ -58,7 +58,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getactivitytimes/{userId}")]
         public async Task<ActionResult<IEnumerable<ActivityTimeDto>>> GetActivityTimesForActivity(int activityId)
         {
-            var activities = await _unitOfWork.ActivityTimesRepository.GetActivityTimesAsync(activityId);
+            var activities = await _unitOfWork.ActivityTimesRepository.GetItemsAsync(a => a.Activity.Id == activityId);
             if (activities == null) return NotFound("There are no Activity times stored");
 
             return Ok(activities);
@@ -68,7 +68,7 @@ namespace MindYourMoodWeb.Controllers
         [HttpGet("getactivitytime/{activitytimeId}")]
         public async Task<ActionResult<ActivityTimeDto>> GetActivityById(int activitytimeId)
         {
-            var activitytime = await _unitOfWork.ActivityTimesRepository.GetActivityTimeAsync(activitytimeId);
+            var activitytime = await _unitOfWork.ActivityTimesRepository.GetItemAsync(activitytimeId);
             if (activitytime == null) return BadRequest("Activity time with specified Id does not exist");
 
             return Ok(_mapper.Map<ActivityTimeDto>(activitytime));
