@@ -8,6 +8,7 @@ namespace MindYourMoodWeb.Interfaces
     {
         IRepository<Affirmation, AffirmationDto> AffirmationRepository { get; }
         IRepository<ChuffChartItem, ChuffChartItemDto> ChuffChartRepository { get; }
+        IRepository<AlternativeThought, AlternativeThoughtDto> AlternativeThoughtRepository { get; }
         IRepository<Appointment, AppointmentDto> AppointmentsRepository { get; }
         IRepository<AppointmentQuestion, AppointmentQuestionDto> AppointmentQuestionsRepository { get; }
         IRepository<Attitude, AttitudeDto> AttitudeRepository { get; }
@@ -41,7 +42,8 @@ namespace MindYourMoodWeb.Interfaces
         IRepository<SolutionPlan, SolutionPlanDto> SolutionPlanRepository { get; }
         IRepository<TellMyself, TellMyselfDto> TellMyselfRepository { get; }
         IRepository<Track, TrackDto> TrackRepository { get; }
-
+        IRepository<SafetyPlanCard, SafetyPlanCardDto> SafetyPlanCardRepository { get; }
+        IRepository<Image, ImageDto> ImageRepository { get; }
         IRepository<ThoughtRecord, ThoughtRecordDto> ThoughtRecordRepository { get; }
 
         IUserRepository UserRepository { get; }
