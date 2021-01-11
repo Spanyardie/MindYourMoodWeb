@@ -10,5 +10,6 @@ namespace MindYourMoodWeb.DTOs
         public string Uri { get; set; }
         [StringLength(300)]
         public string Comment { get; set; } = "";
+        public int UserId { get; set; }
     }
 }

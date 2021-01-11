@@ -1,12 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace MindYourMoodWeb.DTOs
 {
-    public class ThoughtRecordDto
+    public class CreateThoughtRecordDto
     {
-        public int Id { get; set; }
-        [Required]
         public DateTime RecordDate { get; set; } = DateTime.Now;
         public int UserId { get; set; }
     }

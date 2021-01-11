@@ -88,7 +88,13 @@ namespace MindYourMoodWeb.Data
 
         public IRepository<Track, TrackDto> TrackRepository => new TrackRepository(_context, _mapper, new[] { "PlayList" });
 
+        public IRepository<AlternativeThought, AlternativeThoughtDto> AlternativeThoughtRepository => new AlternativeThoughtRepository(_context, _mapper, new[] { "ThoughtRecord" });
+
         public IRepository<ThoughtRecord, ThoughtRecordDto> ThoughtRecordRepository => new ThoughtRecordRepository(_context, _mapper, new[] { "User" });
+
+        public IRepository<SafetyPlanCard, SafetyPlanCardDto> SafetyPlanCardRepository => new SafetyPlanCardRepository(_context, _mapper, new[] { "User" });
+
+        public IRepository<Image, ImageDto> ImageRepository => new ImageRepository(_context, _mapper, new[] { "User" });
 
         public IUserRepository UserRepository => new UserRepository(_context);
 
