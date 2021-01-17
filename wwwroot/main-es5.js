@@ -463,7 +463,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var _home_component_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./home.component.css */
+      "RV7M");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
 
@@ -477,14 +483,32 @@
         return c > 3 && r && Object.defineProperty(target, key, r), r;
       };
 
-      var HomeComponent = function HomeComponent() {
-        _classCallCheck(this, HomeComponent);
+      var __metadata = undefined && undefined.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
       };
 
-      HomeComponent = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+      var HomeComponent = /*#__PURE__*/function () {
+        function HomeComponent() {
+          _classCallCheck(this, HomeComponent);
+        }
+
+        _createClass(HomeComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {}
+        }]);
+
+        return HomeComponent;
+      }();
+
+      HomeComponent.ctorParameters = function () {
+        return [];
+      };
+
+      HomeComponent = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
         selector: 'app-home',
-        template: _raw_loader_home_component_html__WEBPACK_IMPORTED_MODULE_0__["default"]
-      })], HomeComponent);
+        template: _raw_loader_home_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_home_component_css__WEBPACK_IMPORTED_MODULE_1__["default"]]
+      }), __metadata("design:paramtypes", [])], HomeComponent);
       /***/
     },
 
@@ -562,7 +586,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<h1>Hello, world!</h1>\r\n<p>Welcome to your new single-page application, built with:</p>\r\n<ul>\r\n  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>\r\n  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>\r\n  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>\r\n</ul>\r\n<p>To help you get started, we've also set up:</p>\r\n<ul>\r\n  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>\r\n  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>\r\n  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>\r\n</ul>\r\n<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>\r\n";
+      __webpack_exports__["default"] = "<p>home works!</p>\n";
       /***/
     },
 
@@ -870,6 +894,26 @@
         selector: 'app-counter-component',
         template: _raw_loader_counter_component_html__WEBPACK_IMPORTED_MODULE_0__["default"]
       })], CounterComponent);
+      /***/
+    },
+
+    /***/
+    "RV7M":
+    /*!*****************************************!*\
+      !*** ./src/app/home/home.component.css ***!
+      \*****************************************/
+
+    /*! exports provided: default */
+
+    /***/
+    function RV7M(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJob21lLmNvbXBvbmVudC5jc3MifQ== */";
       /***/
     },
 
