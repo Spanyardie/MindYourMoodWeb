@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Interfaces
 {
-    public interface IRepository<T, TDto> where T : Entity where TDto : class
+    public interface IRepository<T> where T : Entity
     {
         void Update(T t);
-        Task<IEnumerable<TDto>> GetItemsAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetItemsAsync(Expression<Func<T, bool>> predicate);
         Task<T> GetItemAsync(int Id);
         void AddItem(T t);
         void RemoveItem(T t);

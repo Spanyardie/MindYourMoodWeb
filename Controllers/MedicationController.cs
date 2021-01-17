@@ -46,7 +46,7 @@ namespace MindYourMoodWeb.Controllers
                 MedicationName = createMedicationDto.MedicationName,
                 TotalDailyDosage = createMedicationDto.TotalDailyDosage,
                 MedicationSpreads = new Collection<MedicationSpread>(),
-                Prescription = await _unitOfWork.PrescriptionRepository.GetItemAsync(prescriptionId)
+                Prescription = _mapper.Map<Prescription>(await _unitOfWork.PrescriptionRepository.GetItemAsync(prescriptionId))
             };
 
             _unitOfWork.MedicationRepository.AddItem(medication);

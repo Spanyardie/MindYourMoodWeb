@@ -5,6 +5,7 @@ using MindYourMoodWeb.DTOs;
 using MindYourMoodWeb.Entities;
 using MindYourMoodWeb.Interfaces;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Controllers
@@ -20,28 +21,29 @@ namespace MindYourMoodWeb.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpDelete("removeactivity/{Id}")]
         public async Task<ActionResult<ActivityDto>> RemoveActivity(int Id)
         {
             var activity = await _unitOfWork.ActivitiesRepository.GetItemAsync(Id);
             if (activity == null) return NotFound("Could not find requested Activity");
 
-            _unitOfWork.ActivitiesRepository.RemoveItem(activity);
+            _unitOfWork.ActivitiesRepository.RemoveItem(_mapper.Map<Activities>(activity));
 
-            if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ActivityDto>(activity));
+            if (await _unitOfWork.Complete()) return Ok(activity);
 
             return BadRequest("Unable to remove Activity");
         }
 
-        [Authorize(Roles = "Member")]
-        [HttpPost("createactivity/{userId}")]
-        public async Task<ActionResult<ActivityDto>> CreateActivity(int userId, CreateActivitiesDto createActivityDto)
+        //[Authorize(Roles = "Member")]
+        [HttpPost("createactivity")]
+        public async Task<ActionResult<ActivityDto>> CreateActivity(CreateActivitiesDto createActivityDto)
         {
             var activity = new Activities
             {
                 ActivityDate = createActivityDto.ActivityDate,
-                User = await _unitOfWork.UserRepository.GetUserByIdAsync(userId)
+                User = await _unitOfWork.UserRepository.GetUserByIdAsync(createActivityDto.UserId),
+                ActivityTimes = new Collection<ActivityTimes>()
             };
 
             _unitOfWork.ActivitiesRepository.AddItem(activity);
@@ -50,17 +52,17 @@ namespace MindYourMoodWeb.Controllers
             return BadRequest("Unable to create Activity");
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpGet("getactivities/{userId}")]
         public async Task<ActionResult<IEnumerable<ActivityDto>>> GetActivitiesForUser(int userId)
         {
-            var activities = await _unitOfWork.ActivitiesRepository.GetItemsAsync(u => u.User.Id == userId);
+            var activities = await _unitOfWork.ActivitiesRepository.GetItemsAsync(u => u.UserId == userId);
             if (activities == null) return NotFound("There are no Activities stored");
 
-            return Ok(activities);
+            return Ok(_mapper.Map<IEnumerable<ActivityDto>>(activities));
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpGet("getactivity/{activityId}")]
         public async Task<ActionResult<ActivityDto>> GetActivityById(int activityId)
         {

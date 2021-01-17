@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Data
 {
-    public class ThoughtRecordRepository : BaseRepository<ThoughtRecord, ThoughtRecordDto>
+    public class ThoughtRecordRepository : BaseRepository<ThoughtRecord>
     {
         public ThoughtRecordRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

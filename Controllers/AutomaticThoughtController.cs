@@ -28,7 +28,6 @@ namespace MindYourMoodWeb.Controllers
             var automaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(Id);
             if (automaticThought == null) return NotFound("Could not find requested Automatic Thought");
 
-
             _unitOfWork.AutomaticThoughtRepository.RemoveItem(automaticThought);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AutomaticThoughtDto>(automaticThought));
@@ -46,7 +45,7 @@ namespace MindYourMoodWeb.Controllers
                 EvidenceForHotThought = (IEnumerable<EvidenceForHotThought>)await _unitOfWork.EvidenceForHotThoughtRepository.GetItemsAsync(tr => tr.ThoughtRecord.Id == createAutomaticThoughtDto.ThoughtRecordid),
                 HotThought = createAutomaticThoughtDto.HotThought,
                 Thought = createAutomaticThoughtDto.Thought,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId)
+                ThoughtRecord = _mapper.Map<ThoughtRecord>(await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId))
             };
 
             _unitOfWork.AutomaticThoughtRepository.AddItem(automaticThought);

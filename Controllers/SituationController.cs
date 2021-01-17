@@ -41,7 +41,7 @@ namespace MindYourMoodWeb.Controllers
         {
             var situation = new Situation
             {
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(userId),
+                ThoughtRecord = _mapper.Map<ThoughtRecord>(await _unitOfWork.ThoughtRecordRepository.GetItemAsync(userId)),
                 What = createSituationDto.What,
                 When = createSituationDto.When,
                 Where = createSituationDto.Where,

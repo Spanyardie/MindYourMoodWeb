@@ -49,8 +49,8 @@ namespace MindYourMoodWeb
                 .AllowCredentials()
                 .WithOrigins("https://localhost:5001"));
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

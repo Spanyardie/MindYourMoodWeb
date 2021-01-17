@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace MindYourMoodWeb.Data
 {
-    public class SolutionReviewRepository : BaseRepository<SolutionReview, SolutionReviewDto>
+    public class SolutionReviewRepository : BaseRepository<SolutionReview>
     {
         public SolutionReviewRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

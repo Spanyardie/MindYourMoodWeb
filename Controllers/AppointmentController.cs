@@ -27,8 +27,7 @@ namespace MindYourMoodWeb.Controllers
             var appointment = await _unitOfWork.AppointmentsRepository.GetItemAsync(Id);
             if (appointment == null) return NotFound("Could not find requested Appointment");
 
-
-            _unitOfWork.AppointmentsRepository.RemoveItem(_mapper.Map<Appointment>(appointment));
+            _unitOfWork.AppointmentsRepository.RemoveItem(appointment);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<AppointmentDto>(appointment));
 

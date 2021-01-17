@@ -29,7 +29,7 @@ namespace MindYourMoodWeb.Controllers
             if (chuffChartitem == null) return NotFound("Could not find requested Chuff chart item");
 
 
-            _unitOfWork.ChuffChartRepository.RemoveItem(_mapper.Map<ChuffChartItem>(chuffChartitem));
+            _unitOfWork.ChuffChartRepository.RemoveItem(chuffChartitem);
 
             if(await _unitOfWork.Complete()) return Ok(_mapper.Map<ChuffChartItemDto>(chuffChartitem));
 

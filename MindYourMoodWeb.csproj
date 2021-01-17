@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="font-awesome" Version="4.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.1" />
@@ -30,6 +31,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.IdentityModel.Logging" Version="6.8.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
@@ -46,7 +51,59 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\_services\base-data.service.ts" />
     <None Remove="ClientApp\src\test.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\activity.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\activityTime.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\affirmation.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\alternativeThought.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\appointment.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\appointmentQuestion.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\attitude.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\automaticThought.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\chuffChartItem.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\contact.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\evidenceAgainstHotThought.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\evidenceForHotThought.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\fantasy.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\feeling.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\genericText.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\health.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\image.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\medication.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\medicationReminder.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\medicationSpread.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\medicationTime.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\mood.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\moodList.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\planAction.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\playList.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\prescription.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\problem.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\problemIdea.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\problemProCon.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\problemStep.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\reaction.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\relationship.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\reRateMood.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\safetyPlanCard.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\situation.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\solutionPlan.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\solutionReview.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\tellMyself.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\thoughtRecord.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\_model\track.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\_model\user.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\_services\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

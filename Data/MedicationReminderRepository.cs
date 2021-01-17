@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Data
 {
-    public class MedicationReminderRepository : BaseRepository<MedicationReminder, MedicationReminderDto>
+    public class MedicationReminderRepository : BaseRepository<MedicationReminder>
     {
         public MedicationReminderRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

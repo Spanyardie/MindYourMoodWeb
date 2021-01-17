@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using MindYourMoodWeb.Entities;
 using MindYourMoodWeb.Interfaces;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Data
 {
-    public class BaseRepository<T, TDto> : IRepository<T, TDto> where T : Entity where TDto : class
+    public class BaseRepository<T> : IRepository<T> where T : Entity
     {
         private readonly DataContext _context;
         private readonly DbSet<T> _items;
@@ -41,19 +40,16 @@ namespace MindYourMoodWeb.Data
         public async Task<T> GetItemAsync(int Id)
         {
             var query = AddIncludes();
-            return await query.SingleOrDefaultAsync(i => i.Id == Id);
+            return _mapper.Map<T>(await query.SingleOrDefaultAsync(i => i.Id == Id));
         }
 
-        public async Task<IEnumerable<TDto>> GetItemsAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
         {
             var query = AddIncludes();
             if (predicate != null)
                 query = query.Where(predicate);
 
-            var items = await query.ProjectTo<TDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-
-            return items;
+            return await query.ToListAsync();
         }
 
         public void RemoveItem(T t)

@@ -6,45 +6,45 @@ namespace MindYourMoodWeb.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Affirmation, AffirmationDto> AffirmationRepository { get; }
-        IRepository<ChuffChartItem, ChuffChartItemDto> ChuffChartRepository { get; }
-        IRepository<AlternativeThought, AlternativeThoughtDto> AlternativeThoughtRepository { get; }
-        IRepository<Appointment, AppointmentDto> AppointmentsRepository { get; }
-        IRepository<AppointmentQuestion, AppointmentQuestionDto> AppointmentQuestionsRepository { get; }
-        IRepository<Attitude, AttitudeDto> AttitudeRepository { get; }
-        IRepository<Fantasy, FantasyDto> FantasyRepository { get; }
-        IRepository<Feeling, FeelingDto> FeelingRepository { get; }
-        IRepository<GenericText, GenericTextDto> GenericTextRepository { get; }
-        IRepository<Health, HealthDto> HealthRepository { get; }
-        IRepository<Prescription, PrescriptionDto> PrescriptionRepository { get; }
-        IRepository<Medication, MedicationDto> MedicationRepository { get; }
-        IRepository<MedicationSpread, MedicationSpreadDto> MedicationSpreadRepository { get; }
-        IRepository<MedicationReminder, MedicationReminderDto> MedicationReminderRepository { get; }
-        IRepository<MedicationTime, MedicationTimeDto> MedicationTimeRepository { get; }
-        IRepository<Mood, MoodDto> MoodRepository { get; }
-        IRepository<MoodList, MoodListDto> MoodListRepository { get; }
-        IRepository<PlayList, PlayListDto> PlayListRepository { get; }
-        IRepository<AutomaticThought, AutomaticThoughtDto> AutomaticThoughtRepository { get; }
-        IRepository<Activities, ActivityDto> ActivitiesRepository { get; }
-        IRepository<ActivityTimes, ActivityTimeDto> ActivityTimesRepository { get; }
-        IRepository<Contact, ContactDto> ContactRepository { get; }
-        IRepository<EvidenceAgainstHotThought, EvidenceAgainstHotThoughtDto> EvidenceAgainstHotThoughtRepository { get; }
-        IRepository<EvidenceForHotThought, EvidenceForHotThoughtDto> EvidenceForHotThoughtRepository { get; }
-        IRepository<ReRateMood, ReRateMoodDto> ReRateMoodRepository { get; }
-        IRepository<Situation, SituationDto> SituationRepository { get; }
-        IRepository<Problem, ProblemDto> ProblemRepository { get; }
-        IRepository<ProblemStep, ProblemStepDto> ProblemStepRepository { get; }
-        IRepository<ProblemIdea, ProblemIdeaDto> ProblemIdeaRepository { get; }
-        IRepository<ProblemProCon, ProblemProConDto> ProblemProConRepository { get; }
-        IRepository<Reaction, ReactionDto> ReactionRepository { get; }
-        IRepository<Relationship, RelationshipDto> RelationshipRepository { get; }
-        IRepository<SolutionReview, SolutionReviewDto> SolutionReviewRepository { get; }
-        IRepository<SolutionPlan, SolutionPlanDto> SolutionPlanRepository { get; }
-        IRepository<TellMyself, TellMyselfDto> TellMyselfRepository { get; }
-        IRepository<Track, TrackDto> TrackRepository { get; }
-        IRepository<SafetyPlanCard, SafetyPlanCardDto> SafetyPlanCardRepository { get; }
-        IRepository<Image, ImageDto> ImageRepository { get; }
-        IRepository<ThoughtRecord, ThoughtRecordDto> ThoughtRecordRepository { get; }
+        IRepository<Affirmation> AffirmationRepository { get; }
+        IRepository<ChuffChartItem> ChuffChartRepository { get; }
+        IRepository<AlternativeThought> AlternativeThoughtRepository { get; }
+        IRepository<Appointment> AppointmentsRepository { get; }
+        IRepository<AppointmentQuestion> AppointmentQuestionsRepository { get; }
+        IRepository<Attitude> AttitudeRepository { get; }
+        IRepository<Fantasy> FantasyRepository { get; }
+        IRepository<Feeling> FeelingRepository { get; }
+        IRepository<GenericText> GenericTextRepository { get; }
+        IRepository<Health> HealthRepository { get; }
+        IRepository<Prescription> PrescriptionRepository { get; }
+        IRepository<Medication> MedicationRepository { get; }
+        IRepository<MedicationSpread> MedicationSpreadRepository { get; }
+        IRepository<MedicationReminder> MedicationReminderRepository { get; }
+        IRepository<MedicationTime> MedicationTimeRepository { get; }
+        IRepository<Mood> MoodRepository { get; }
+        IRepository<MoodList> MoodListRepository { get; }
+        IRepository<PlayList> PlayListRepository { get; }
+        IRepository<AutomaticThought> AutomaticThoughtRepository { get; }
+        IRepository<Activities> ActivitiesRepository { get; }
+        IRepository<ActivityTimes> ActivityTimesRepository { get; }
+        IRepository<Contact> ContactRepository { get; }
+        IRepository<EvidenceAgainstHotThought> EvidenceAgainstHotThoughtRepository { get; }
+        IRepository<EvidenceForHotThought> EvidenceForHotThoughtRepository { get; }
+        IRepository<ReRateMood> ReRateMoodRepository { get; }
+        IRepository<Situation> SituationRepository { get; }
+        IRepository<Problem> ProblemRepository { get; }
+        IRepository<ProblemStep> ProblemStepRepository { get; }
+        IRepository<ProblemIdea> ProblemIdeaRepository { get; }
+        IRepository<ProblemProCon> ProblemProConRepository { get; }
+        IRepository<Reaction> ReactionRepository { get; }
+        IRepository<Relationship> RelationshipRepository { get; }
+        IRepository<SolutionReview> SolutionReviewRepository { get; }
+        IRepository<SolutionPlan> SolutionPlanRepository { get; }
+        IRepository<TellMyself> TellMyselfRepository { get; }
+        IRepository<Track> TrackRepository { get; }
+        IRepository<SafetyPlanCard> SafetyPlanCardRepository { get; }
+        IRepository<Image> ImageRepository { get; }
+        IRepository<ThoughtRecord> ThoughtRecordRepository { get; }
 
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
