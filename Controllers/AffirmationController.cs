@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AffirmationController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,13 +21,12 @@ namespace MindYourMoodWeb.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpDelete("removeaffirmation/{Id}")]
         public async Task<ActionResult<AffirmationDto>> RemoveAffirmation(int Id)
         {
             var affirmation = await _unitOfWork.AffirmationRepository.GetItemAsync(Id);
             if (affirmation == null) return NotFound("Could not find requested Affirmation");
-
 
             _unitOfWork.AffirmationRepository.RemoveItem(affirmation);
 
@@ -36,10 +35,11 @@ namespace MindYourMoodWeb.Controllers
             return BadRequest("Unable to remove Affirmation");
         }
 
-        [Authorize(Roles = "Member")]
-        [HttpPost("createaffirmation/{userId}")]
-        public async Task<ActionResult<AffirmationDto>> CreateAffirmation(int userId, CreateAffirmationDto createAffirmationDto)
+        //[Authorize(Roles = "Member")]
+        [HttpPost("createaffirmation")]
+        public async Task<ActionResult<AffirmationDto>> CreateAffirmation(CreateAffirmationDto createAffirmationDto)
         {
+            var userId = createAffirmationDto.UserId;
             var affirmation = new Affirmation
             {
                 AffirmationText = createAffirmationDto.AffirmationText,
@@ -52,17 +52,17 @@ namespace MindYourMoodWeb.Controllers
             return BadRequest("Unable to create Affirmation");
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpGet("getaffirmations/{userId}")]
         public async Task<ActionResult<IEnumerable<AffirmationDto>>> GetAffirmationsForUser(int userId)
         {
-            var affirmations = await _unitOfWork.AffirmationRepository.GetItemsAsync(u => u.User.Id == userId);
+            var affirmations = await _unitOfWork.AffirmationRepository.GetItemsAsync(u => u.UserId == userId);
             if (affirmations == null) return NotFound("There are no Affirmations stored");
 
-            return Ok(affirmations);
+            return Ok(_mapper.Map<IEnumerable<AffirmationDto>>(affirmations));
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpGet("getaffirmation/{affirmationId}")]
         public async Task<ActionResult<AffirmationDto>> GetAffirmationById(int affirmationId)
         {

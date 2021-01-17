@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MindYourMoodWeb.Data
 {
-    public class MoodListRepository : BaseRepository<MoodList, MoodListDto>
+    public class MoodListRepository : BaseRepository<MoodList>
     {
         public MoodListRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

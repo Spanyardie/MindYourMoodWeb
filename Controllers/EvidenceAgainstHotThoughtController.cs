@@ -40,9 +40,9 @@ namespace MindYourMoodWeb.Controllers
         {
             var evidenceagainsthotthought = new EvidenceAgainstHotThought
             {
-                AutomaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId),
+                AutomaticThought = _mapper.Map<AutomaticThought>(await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId)),
                 Evidence = createEvidenceAgainstHotThoughtDto.Evidence,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(createEvidenceAgainstHotThoughtDto.ThoughtRecordId)
+                ThoughtRecord = _mapper.Map<ThoughtRecord>(await _unitOfWork.ThoughtRecordRepository.GetItemAsync(createEvidenceAgainstHotThoughtDto.ThoughtRecordId))
             };
 
             _unitOfWork.EvidenceAgainstHotThoughtRepository.AddItem(evidenceagainsthotthought);

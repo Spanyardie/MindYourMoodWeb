@@ -40,10 +40,10 @@ namespace MindYourMoodWeb.Controllers
         {
             var reratemood = new ReRateMood
             {
-                Mood = await _unitOfWork.MoodRepository.GetItemAsync(createReRateMoodDto.MoodsId),
+                Mood = _mapper.Map<Mood>(await _unitOfWork.MoodRepository.GetItemAsync(createReRateMoodDto.MoodsId)),
                 MoodListId = createReRateMoodDto.MoodListId,
                 MoodRating = createReRateMoodDto.MoodRating,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId)
+                ThoughtRecord = _mapper.Map<ThoughtRecord>(await _unitOfWork.ThoughtRecordRepository.GetItemAsync(thoughtRecordId))
             };
 
             _unitOfWork.ReRateMoodRepository.AddItem(reratemood);

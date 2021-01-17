@@ -42,10 +42,10 @@ namespace MindYourMoodWeb.Controllers
         {
             var problemIdea = new ProblemIdea
             {
-                Problem = await _unitOfWork.ProblemRepository.GetItemAsync(ideaParams.ProblemId),
+                Problem = _mapper.Map<Problem>(await _unitOfWork.ProblemRepository.GetItemAsync(ideaParams.ProblemId)),
                 IdeaText = createProblemIdeaDto.IdeaText,
                 ProsAndCons = new Collection<ProblemProCon>(),
-                Step = await _unitOfWork.ProblemStepRepository.GetItemAsync(ideaParams.StepId)
+                Step = _mapper.Map<ProblemStep>(await _unitOfWork.ProblemStepRepository.GetItemAsync(ideaParams.StepId))
             };
 
             _unitOfWork.ProblemIdeaRepository.AddItem(problemIdea);

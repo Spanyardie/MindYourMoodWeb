@@ -28,7 +28,7 @@ namespace MindYourMoodWeb.Controllers
             if (evidenceforhotthought == null) return NotFound("Could not find requested EvidenceForHotThought");
 
 
-            _unitOfWork.EvidenceForHotThoughtRepository.RemoveItem(_mapper.Map<EvidenceForHotThought>(evidenceforhotthought));
+            _unitOfWork.EvidenceForHotThoughtRepository.RemoveItem(evidenceforhotthought);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<EvidenceForHotThoughtDto>(evidenceforhotthought));
 
@@ -41,9 +41,9 @@ namespace MindYourMoodWeb.Controllers
         {
             var evidenceforhotthought = new EvidenceForHotThought
             {
-                AutomaticThought = await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId),
+                AutomaticThought = _mapper.Map<AutomaticThought>(await _unitOfWork.AutomaticThoughtRepository.GetItemAsync(automaticThoughtId)),
                 Evidence = createEvidenceForHotThoughtDto.Evidence,
-                ThoughtRecord = await _unitOfWork.ThoughtRecordRepository.GetItemAsync(createEvidenceForHotThoughtDto.ThoughtRecordId)
+                ThoughtRecord = _mapper.Map<ThoughtRecord>(await _unitOfWork.ThoughtRecordRepository.GetItemAsync(createEvidenceForHotThoughtDto.ThoughtRecordId))
             };
 
             _unitOfWork.EvidenceForHotThoughtRepository.AddItem(evidenceforhotthought);

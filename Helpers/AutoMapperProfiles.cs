@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MindYourMoodWeb.DTOs;
 using MindYourMoodWeb.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MindYourMoodWeb.Helpers
 {

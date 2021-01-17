@@ -27,7 +27,6 @@ namespace MindYourMoodWeb.Controllers
             var track = await _unitOfWork.TrackRepository.GetItemAsync(Id);
             if (track == null) return NotFound("Could not find requested Track");
 
-
             _unitOfWork.TrackRepository.RemoveItem(track);
 
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<TrackDto>(track));
@@ -46,7 +45,7 @@ namespace MindYourMoodWeb.Controllers
                 Duration = createTrackDto.Duration,
                 OrderNumber = createTrackDto.OrderNumber,
                 Uri = createTrackDto.Uri,
-                PlayList = await _unitOfWork.PlayListRepository.GetItemAsync(playListId)
+                PlayList = _mapper.Map<PlayList>(await _unitOfWork.PlayListRepository.GetItemAsync(playListId))
             };
 
             _unitOfWork.TrackRepository.AddItem(track);

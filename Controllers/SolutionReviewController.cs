@@ -43,7 +43,7 @@ namespace MindYourMoodWeb.Controllers
             {
                 Achieved = createSolutionReviewDto.Achieved,
                 AchievedDate = createSolutionReviewDto.AchievedDate,
-                Idea = await _unitOfWork.ProblemIdeaRepository.GetItemAsync(problemIdeaId),
+                Idea = _mapper.Map<ProblemIdea>(await _unitOfWork.ProblemIdeaRepository.GetItemAsync(problemIdeaId)),
                 ReviewText = createSolutionReviewDto.ReviewText,
                 SolutionSteps = new Collection<SolutionPlan>()
             };

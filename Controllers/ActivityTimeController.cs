@@ -20,7 +20,7 @@ namespace MindYourMoodWeb.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpDelete("removeactivitytime/{Id}")]
         public async Task<ActionResult<ActivityTimeDto>> RemoveActivityTime(int Id)
         {
@@ -34,14 +34,14 @@ namespace MindYourMoodWeb.Controllers
             return BadRequest("Unable to remove Activity time");
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpPost("createactivitytime/{activityId}")]
         public async Task<ActionResult<ActivityTimeDto>> CreateActivity(int activityId, CreateActivityTimeDto createActivityTimeDto)
         {
             var activitytime = new ActivityTimes
             {
                 Achievement = createActivityTimeDto.Achievement,
-                Activity = await _unitOfWork.ActivitiesRepository.GetItemAsync(activityId),
+                Activity  = _mapper.Map<Activities>(await _unitOfWork.ActivitiesRepository.GetItemAsync(activityId)),
                 ActivityName = createActivityTimeDto.ActivityName,
                 Intimacy = createActivityTimeDto.Intimacy,
                 Pleasure = createActivityTimeDto.Pleasure,
@@ -54,17 +54,17 @@ namespace MindYourMoodWeb.Controllers
             return BadRequest("Unable to create Activity time");
         }
 
-        [Authorize(Roles = "Member")]
-        [HttpGet("getactivitytimes/{userId}")]
+        //[Authorize(Roles = "Member")]
+        [HttpGet("getactivitytimes/{activityId}")]
         public async Task<ActionResult<IEnumerable<ActivityTimeDto>>> GetActivityTimesForActivity(int activityId)
         {
-            var activities = await _unitOfWork.ActivityTimesRepository.GetItemsAsync(a => a.Activity.Id == activityId);
+            var activities = await _unitOfWork.ActivityTimesRepository.GetItemsAsync(a => a.ActivityId == activityId);
             if (activities == null) return NotFound("There are no Activity times stored");
 
-            return Ok(activities);
+            return Ok(_mapper.Map<IEnumerable<ActivityTimeDto>>(activities));
         }
 
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         [HttpGet("getactivitytime/{activitytimeId}")]
         public async Task<ActionResult<ActivityTimeDto>> GetActivityById(int activitytimeId)
         {

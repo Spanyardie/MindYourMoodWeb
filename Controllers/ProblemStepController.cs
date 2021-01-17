@@ -44,7 +44,7 @@ namespace MindYourMoodWeb.Controllers
             {
                 Ideas = new Collection<ProblemIdea>(),
                 PriorityOrder = createProblemStepDto.PriorityOrder,
-                Problem = await _unitOfWork.ProblemRepository.GetItemAsync(problemId),
+                Problem = _mapper.Map<Problem>(await _unitOfWork.ProblemRepository.GetItemAsync(problemId)),
                 Step = createProblemStepDto.Step
             };
 

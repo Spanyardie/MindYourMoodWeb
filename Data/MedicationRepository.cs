@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace MindYourMoodWeb.Data
 {
-    public class MedicationRepository : BaseRepository<Medication, MedicationDto>
+    public class MedicationRepository : BaseRepository<Medication>
     {
         public MedicationRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

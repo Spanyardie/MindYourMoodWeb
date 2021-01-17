@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace MindYourMoodWeb.Data
 {
-    public class AffirmationRepository : BaseRepository<Affirmation, AffirmationDto>
+    public class AffirmationRepository : BaseRepository<Affirmation>
     {
         public AffirmationRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

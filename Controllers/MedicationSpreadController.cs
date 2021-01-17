@@ -43,7 +43,7 @@ namespace MindYourMoodWeb.Controllers
             var medicationSpread = new MedicationSpread
             {
                 Dosage = createMedicationSpreadDto.Dosage,
-                Medication = await _unitOfWork.MedicationRepository.GetItemAsync(medicationId),
+                Medication = _mapper.Map<Medication>(await _unitOfWork.MedicationRepository.GetItemAsync(medicationId)),
                 MedicationTakeReminder = new MedicationReminder(),
                 MedicationTime = new MedicationTime(),
                 Relevance = (FoodRelevance)createMedicationSpreadDto.Relevance

@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace MindYourMoodWeb.Data
 {
-    public class ActivityTimeRepository : BaseRepository<ActivityTimes, ActivityTimeDto>
+    public class ActivityTimeRepository : BaseRepository<ActivityTimes>
     {
         public ActivityTimeRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

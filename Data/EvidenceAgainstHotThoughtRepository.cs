@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace MindYourMoodWeb.Data
 {
-    public class EvidenceAgainstHotThoughtRepository : BaseRepository<EvidenceAgainstHotThought, EvidenceAgainstHotThoughtDto>
+    public class EvidenceAgainstHotThoughtRepository : BaseRepository<EvidenceAgainstHotThought>
     {
         public EvidenceAgainstHotThoughtRepository(DataContext context, IMapper mapper, IList<string> includes) : base(context, mapper, includes)
         {

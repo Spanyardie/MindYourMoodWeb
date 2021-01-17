@@ -41,7 +41,7 @@ namespace MindYourMoodWeb.Controllers
             var solutionPlan = new SolutionPlan
             {
                 PriorityOrder = createSolutionPlanDto.PriorityOrder,
-                SolutionReview = await _unitOfWork.SolutionReviewRepository.GetItemAsync(solutionReviewId),
+                SolutionReview = _mapper.Map<SolutionReview>(await _unitOfWork.SolutionReviewRepository.GetItemAsync(solutionReviewId)),
                 SolutionStep = createSolutionPlanDto.SolutionStep
             };
 

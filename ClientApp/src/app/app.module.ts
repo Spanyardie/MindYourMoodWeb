@@ -9,6 +9,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AffirmationComponent } from './components/affirmation/affirmation.component';
+import { ActivitiesComponent } from './components/activities/activities.component';
+import { ActivitytimeComponent } from './components/activitytime/activitytime.component';
 
 @NgModule({
   declarations: [
@@ -16,16 +19,22 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    AffirmationComponent,
+    ActivitiesComponent,
+    ActivitytimeComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'affirmation', component: AffirmationComponent },
+      { path: 'activities', component: ActivitiesComponent },
+      { path: 'activitytime', component: ActivitytimeComponent }
     ])
   ],
   providers: [],
